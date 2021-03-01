@@ -7,18 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AssignmentAyeho.Controllers
+namespace Assignment.Controllers
 {
     //    [ApiController, Route("api/[controller]")]
 
     [ApiController]
     [Route("[controller]")]
-    public class AssignmentAyehoController : ControllerBase
+    public class AssignmentController : ControllerBase
     {
         private IPostsService postsService;
-        private readonly ILogger<AssignmentAyehoController> _logger;
+        private readonly ILogger<AssignmentController> _logger;
 
-        public AssignmentAyehoController(IPostsService postsService)
+        public AssignmentController(IPostsService postsService)
         {
             this.postsService = postsService;
         }

@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Data", "Assignme
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Services", "Assignment.Services\Assignment.Services.csproj", "{5703E7B2-30D0-48A5-A921-00011997A084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssignmentAyeho", "AssignmentAyeho\AssignmentAyeho.csproj", "{5DAEA653-0115-4028-A641-41D373720717}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment", "AssignmentAyeho\Assignment.csproj", "{5DAEA653-0115-4028-A641-41D373720717}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0186FAE0-FA09-473B-BA3C-C98820624808}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment.Services.Tests", "Assignment.Services.Tests\Assignment.Services.Tests.csproj", "{6DE2DBAD-619A-4F2F-AB6C-EC81FBAA98E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Services.Tests", "Assignment.Services.Tests\Assignment.Services.Tests.csproj", "{6DE2DBAD-619A-4F2F-AB6C-EC81FBAA98E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,11 +1,11 @@
 {
-  "name": "assignmentayeho",
+  "name": "assignment",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:ssr": "ng run AssignmentAyeho:server:dev",
+    "build:ssr": "ng run Assignment:server:dev",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
