@@ -1,0 +1,12 @@
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\bin\Release\netstandard2.0\Assignment.Services.deps.json
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\bin\Release\netstandard2.0\Assignment.Services.dll
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\bin\Release\netstandard2.0\Assignment.Services.pdb
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\bin\Release\netstandard2.0\Assignment.Data.dll
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\bin\Release\netstandard2.0\Assignment.Data.pdb
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\obj\Release\netstandard2.0\Assignment.Services.csprojAssemblyReference.cache
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\obj\Release\netstandard2.0\Assignment.Services.AssemblyInfoInputs.cache
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\obj\Release\netstandard2.0\Assignment.Services.AssemblyInfo.cs
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\obj\Release\netstandard2.0\Assignment.Services.csproj.CoreCompileInputs.cache
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\obj\Release\netstandard2.0\Assignment.Services.csproj.CopyComplete
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\obj\Release\netstandard2.0\Assignment.Services.dll
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Services\obj\Release\netstandard2.0\Assignment.Services.pdb

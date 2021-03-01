@@ -1,0 +1,9 @@
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\bin\Release\netstandard2.0\Assignment.Data.deps.json
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\bin\Release\netstandard2.0\Assignment.Data.dll
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\bin\Release\netstandard2.0\Assignment.Data.pdb
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\obj\Release\netstandard2.0\Assignment.Data.csprojAssemblyReference.cache
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\obj\Release\netstandard2.0\Assignment.Data.AssemblyInfoInputs.cache
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\obj\Release\netstandard2.0\Assignment.Data.AssemblyInfo.cs
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\obj\Release\netstandard2.0\Assignment.Data.csproj.CoreCompileInputs.cache
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\obj\Release\netstandard2.0\Assignment.Data.dll
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\obj\Release\netstandard2.0\Assignment.Data.pdb

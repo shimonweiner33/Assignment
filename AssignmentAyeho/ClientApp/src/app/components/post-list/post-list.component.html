@@ -1,0 +1,41 @@
+<ng-container>
+    <input [formControl]="searchControl" type="text">
+    <label>
+        חיפוש כותרת
+    </label>
+
+    <app-post [post]="post" class="post" (updatePostEvent)="updatePost($event)" (deletePostEvent)="deletePost($event)"
+        *ngFor="let post of filteredPostList">
+    </app-post>
+
+
+    <button (click)="openDialogAdd = !openDialogAdd">הוספה</button>
+    <div *ngIf="openDialogAdd">
+        <form [formGroup]="postFormGroup">
+
+            <label>
+                author:
+                <input type="text" formControlName="author" class="form__field" >
+            </label>
+
+            <label>
+                comment:
+                <input type="text" formControlName="comment" class="form__field" >
+            </label>
+            <label>
+                image:
+                <input type="text" formControlName="image" class="form__field" >
+            </label>
+            <label>
+                title:
+                <input type="text" formControlName="title" class="form__field">
+            </label>
+            <label>
+                isFavorite:
+                <input type="checkbox" formControlName="isFavorite">
+            </label>
+
+        </form>
+        <button (click)="addPost()">שמור</button>
+    </div>
+</ng-container>

@@ -1,0 +1,17 @@
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Common\bin\Debug\netstandard2.0\Assignment.Common.deps.json
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Common\bin\Debug\netstandard2.0\Assignment.Common.dll
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Common\bin\Debug\netstandard2.0\Assignment.Common.pdb
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.AssemblyInfoInputs.cache
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.AssemblyInfo.cs
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.csproj.CoreCompileInputs.cache
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.dll
+C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.pdb
+C:\gihub\Assignment\Assignment.Common\bin\Debug\netstandard2.0\Assignment.Common.deps.json
+C:\gihub\Assignment\Assignment.Common\bin\Debug\netstandard2.0\Assignment.Common.dll
+C:\gihub\Assignment\Assignment.Common\bin\Debug\netstandard2.0\Assignment.Common.pdb
+C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.csprojAssemblyReference.cache
+C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.AssemblyInfoInputs.cache
+C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.AssemblyInfo.cs
+C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.csproj.CoreCompileInputs.cache
+C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.dll
+C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.pdb
