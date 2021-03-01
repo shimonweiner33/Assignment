@@ -18,7 +18,7 @@ export class PostsService {
   GetPostList(posts: Posts) {
 
     this._postListResponse$.next(null)
-    this.http.get("https://localhost:44353/AssignmentAyeho/GeAllPosts").subscribe((res: Posts) => {
+    this.http.get("https://localhost:44353/Assignment/GeAllPosts").subscribe((res: Posts) => {
       this._postListResponse$.next(res)
 
     }, err => {
@@ -27,7 +27,7 @@ export class PostsService {
   }
 
   AddPost(post: Post) {
-      this.http.post("https://localhost:44353/AssignmentAyeho/CreateOrUpdatePost", post).subscribe((res: Boolean) => {
+      this.http.post("https://localhost:44353/Assignment/CreateOrUpdatePost", post).subscribe((res: Boolean) => {
       const list = this._postListResponse$.getValue();
       list.posts.push(post);
       this._postListResponse$.next(list)
@@ -36,7 +36,7 @@ export class PostsService {
     })
   }
   UpdatePost(post: Post) {
-    this.http.post("https://localhost:44353/AssignmentAyeho/CreateOrUpdatePost", post).subscribe((res: Boolean) => {
+    this.http.post("https://localhost:44353/Assignment/CreateOrUpdatePost", post).subscribe((res: Boolean) => {
       const list = this._postListResponse$.getValue();
       const index = list.posts.indexOf(post);
       if (index > -1) {
@@ -49,7 +49,7 @@ export class PostsService {
   }
   DeletePost(postId: number) {
 
-      this.http.post("https://localhost:44353/AssignmentAyeho/DeletePost", postId).subscribe((res: Boolean) => {
+      this.http.post("https://localhost:44353/Assignment/DeletePost", postId).subscribe((res: Boolean) => {
       const list = this._postListResponse$.getValue();
       list.posts = list.posts.filter(x => x.id !== postId);
       this._postListResponse$.next(list)
