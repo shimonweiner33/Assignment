@@ -51,7 +51,7 @@ namespace Assignment.Services.Tests
 
         /// <summary>
         /// Tests if post will updated or create when the data valid.
-        /// The expected result is true when the post would be fully created or updated in Posts - table.
+        /// The result is integer number. when actualResult > expectedNotResult - the post would be fully created or updated.  in Posts - table.
         /// </summary>
         [Theory]
         [MemberData(nameof(PostsInlineTestData.TestData_Create_Or_Update_DataValid), MemberType = typeof(PostsInlineTestData))]
@@ -59,7 +59,7 @@ namespace Assignment.Services.Tests
         {
             // Arrange
 
-            bool actualResult = false;
+            int actualResult = 0;
 
             // Act
             try
@@ -68,14 +68,13 @@ namespace Assignment.Services.Tests
             }
             catch
             {
-                actualResult = false;
+                actualResult = 0;
             }
             finally
             {
                 // need to Rollback;
             }
-            // Assert
-            Assert.Equal(testDataInfo.ExpectedResult, actualResult);
+            Assert.True(testDataInfo.ExpectedNotResult < actualResult);
         }
 
     }
