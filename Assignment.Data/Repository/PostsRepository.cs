@@ -160,8 +160,8 @@ namespace Assignment.Data.Repository
                                         now = DateTime.Now,
                                         user = "user"
                                     });
-
-                    return affectedRowId;
+                    int insertedId = (int)(affectedRowId);
+                    return insertedId;
                 }
             }
             catch (Exception ex)
