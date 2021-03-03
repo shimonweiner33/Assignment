@@ -1,4 +1,5 @@
 using Assignment.Data;
+using Assignment.Hubs;
 using Assignment.Services;
 using Assignment.Services.Posts;
 using Microsoft.AspNetCore.Builder;
@@ -32,11 +33,31 @@ namespace Assignment
             services.AddControllers();
             services.AddRepositories();
             services.AddCommonServices();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //app.UseSignalR(routes =>
+            //{
+            //    routes.MapHub<MessageHub>("message");
+            //});
+
+            app.UseSignalR(routes =>
+            {
+                try
+                {
+                    // for net core 2.0 / net standard 2.0
+                    routes.MapHub<MessageHub>("message");
+                }
+                catch (System.Exception e)
+                {
+                    // for net 461
+                    routes.MapHub<MessageHub>("/message");
+                }
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

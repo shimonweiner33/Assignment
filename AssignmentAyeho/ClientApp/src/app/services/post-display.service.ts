@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Post, Posts } from '../models/posts-display.model';
+import { HubsService } from './hubs.service';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class PostsService {
   private _postListResponse$ = new BehaviorSubject<Posts>(null);
   public postList$ = this._postListResponse$.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private hubsService: HubsService) {
     this.GetPostList(null);
   }
   GetPostList(posts: Posts) {
@@ -61,5 +62,17 @@ export class PostsService {
 
   //   return this.http.get<T>(url)
   // }
+  updatePostListAfterChangesByOther() {
+    this.hubsService._hubConnecton.on('updatePost', post => {
 
+      // const index = this.postList.indexOf(post);
+      // if (index > -1) {
+      //   this.postList[index] = post;
+      // }
+      // else {
+      //   this.postList.push(post);
+      // }
+      console.log(post);
+    });
+  }
 }

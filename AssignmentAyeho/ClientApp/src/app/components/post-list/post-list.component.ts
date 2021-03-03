@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Post } from 'src/app/models/posts-display.model';
-import { PostsService } from 'src/app/services/post-display.service';
+import { Post } from './../../models/posts-display.model';
+import { HubsService } from './../../services/hubs.service';
+import { PostsService } from './../../services/post-display.service';
 
 @Component({
   selector: 'app-post-list',
@@ -17,7 +18,7 @@ export class PostListComponent implements OnInit {
   searchControl: FormControl = new FormControl('');
   postFormGroup: FormGroup;
 
-  constructor(private postsService: PostsService, private route: ActivatedRoute) {
+  constructor(private postsService: PostsService, private route: ActivatedRoute, private hubsService: HubsService) {
   }
   ngOnInit() {
     this.postsService.postList$.subscribe((posts: any) => {
@@ -33,7 +34,25 @@ export class PostListComponent implements OnInit {
         this.filteredPostList = this.postList.filter(x => x.title.includes(val));
       }
     });
+    this.postsService.updatePostListAfterChangesByOther();
+    //this.updatePostListAfterChangesByOther();
 
+    this.initListFormGroup();
+  }
+  // updatePostListAfterChangesByOther() {
+  //   this.hubsService._hubConnecton.on('updatePost', post => {
+
+  //     const index = this.postList.indexOf(post);
+  //     if (index > -1) {
+  //       this.postList[index] = post;
+  //     }
+  //     else {
+  //       this.postList.push(post);
+  //     }
+  //     console.log(post);
+  //   });
+  // }
+  initListFormGroup() {
     this.postFormGroup = new FormGroup({
       author: new FormControl(''),
       comment: new FormControl(''),
@@ -55,5 +74,6 @@ export class PostListComponent implements OnInit {
     this.openDialogAdd = false;
     this.postFormGroup.reset();
   }
+
 
 }

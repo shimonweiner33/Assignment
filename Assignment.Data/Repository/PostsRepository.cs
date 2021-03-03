@@ -118,34 +118,37 @@ namespace Assignment.Data.Repository
             return sQuery;
         }
 
-        public async Task<bool> CreateOrUpdatePost(Post post)
+        public async Task<int> CreateOrUpdatePost(Post post)
         {
             try
             {
 
-                var sQuery = $@"if EXISTS (SELECT * FROM Posts
+                var sQuery = $@"DECLARE @InsertedId int = @postId;
+                                IF EXISTS (SELECT * FROM Posts
                                 WHERE Id = @postId)
 
-                                    begin
+                                    BEGIN
                                        UPDATE Posts
                                        SET Title = @title, 
                                            Author = @author, 
                                            Comment = @comment,
                                            Image = @image,
                                            IsFavorite = @isFavorite,
-                                           UpdatedOn = @now , 
+                                           UpdatedOn = @now, 
                                            UpdatedBy = @user
                                        WHERE Id = @postId
-                                    end
-                                else
-                                    begin
+                                    END
+                                ELSE
+                                    BEGIN
                                         INSERT INTO Posts(Title, Author, Comment, Image, IsFavorite, UpdatedOn, UpdatedBy, CreatedOn, CreatedBy)
                                         VALUES(@title, @author, @comment, @image, @isFavorite, @now, @user, @now, @user);
-                                    end";
+                                        SELECT @InsertedId = SCOPE_IDENTITY()
+                                    END
+                                SELECT @InsertedId;";
 
                 using (IDbConnection conn = Connection)
                 {
-                    var affectedRows = await conn.ExecuteAsync(sQuery,
+                    var affectedRowId = await conn.ExecuteScalarAsync(sQuery,
                                     new
                                     {
                                         postId = post.Id,
@@ -158,7 +161,7 @@ namespace Assignment.Data.Repository
                                         user = "user"
                                     });
 
-                    return true;
+                    return affectedRowId;
                 }
             }
             catch (Exception ex)

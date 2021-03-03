@@ -11,7 +11,7 @@ namespace Assignment.Services.Posts
         Task<Post> GetPostById(int postId);
         Task<PostsList> GetAllPosts();
         Task<PostsList> GetAllPostsByParams(Post post);
-        Task<bool> CreateOrUpdatePost(Post post);
+        Task<int> CreateOrUpdatePost(Post post);
         Task<bool> DeletePost(int postId);
     }
 }

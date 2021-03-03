@@ -1,6 +1,8 @@
 ﻿using Assignment.Data.Models;
+using Assignment.Hubs;
 using Assignment.Services.Posts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,12 +17,14 @@ namespace Assignment.Controllers
     [Route("[controller]")]
     public class AssignmentController : ControllerBase
     {
-        private IPostsService postsService;
+        private IPostsService _postsService;
         private readonly ILogger<AssignmentController> _logger;
+        private readonly IHubContext<MessageHub> _messageHubContex;
 
-        public AssignmentController(IPostsService postsService)
+        public AssignmentController(IPostsService postsService, IHubContext<MessageHub> messageHubContex)
         {
-            this.postsService = postsService;
+            this._postsService = postsService;
+            this._messageHubContex = messageHubContex;
         }
 
         //[HttpGet, Route("GetPostById")]
@@ -32,27 +36,38 @@ namespace Assignment.Controllers
         [HttpGet, Route("GeAllPosts")]
         public Task<PostsList> GeAllPosts()
         {
-            return postsService.GetAllPosts();
+            return _postsService.GetAllPosts();
         }
         [HttpGet, Route("GetAllPostsByParams")]
         public Task<PostsList> GetAllPostsByParams(Post searchParams)
         {
-            return postsService.GetAllPostsByParams(searchParams);
+            return _postsService.GetAllPostsByParams(searchParams);
         }
 
         [HttpPost, Route("CreateOrUpdatePost")]
-        public async Task<bool> CreateOrUpdatePost(Post post)
+        public async Task<int> CreateOrUpdatePost(Post post)
         {
-            var result = await postsService.CreateOrUpdatePost(post);
+            int InsertedId =  await _postsService.CreateOrUpdatePost(post);
+            post.Id = InsertedId;
+            //broadcast the message to the clients
+            _messageHubContex.Clients.All.SendAsync("UpdatePost", post);
 
-            return result;
+            return InsertedId;
         }
 
         [HttpPost, Route("DeletePost")]
         public async Task<bool> DeletePost([FromBody] int postId)
         {
-            var result = await postsService.DeletePost(postId);
+            var result = await _postsService.DeletePost(postId);
             return result;
+        }
+
+        [HttpGet, Route("SendMessage")]
+        public async Task<bool> SendMessage(string message)
+        {
+            //broadcast the message to the clients
+            _messageHubContex.Clients.All.SendAsync("Send", message);
+            return true;
         }
     }
 }

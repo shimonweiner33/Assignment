@@ -35,7 +35,7 @@ namespace Assignment.Services.Posts
 
             return post;
         }
-        public async Task<bool> CreateOrUpdatePost(Post post)
+        public async Task<int> CreateOrUpdatePost(Post post)
         {
             var result = await postRepository.CreateOrUpdatePost(post);
             return result;

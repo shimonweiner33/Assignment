@@ -24,7 +24,7 @@ namespace Assignment.Services.Tests
                           IsFavorite = true,
                           Title = "Title Test"
                        },
-                       ExpectedResult = true
+                       ExpectedNotResult = 0
             },
                 new PostCreateOrUpdateInlineTestDataInfo() {
                        Data = new Post()
@@ -36,7 +36,7 @@ namespace Assignment.Services.Tests
                           IsFavorite = true,
                           Title = "Title Test"
                        },
-                       ExpectedResult = true
+                       ExpectedNotResult = 0
             },
         };
         //private static readonly List<PostCreateOrUpdateInlineTestDataInfo> _updateIdsExistAndDataInvalid = new List<PostCreateOrUpdateInlineTestDataInfo>()
@@ -90,6 +90,6 @@ namespace Assignment.Services.Tests
     public class PostCreateOrUpdateInlineTestDataInfo
     {
         public Post Data { get; set; }
-        public bool ExpectedResult { get; set; }
+        public int ExpectedNotResult { get; set; }
     }
 }
