@@ -1,6 +1,7 @@
 ﻿using Assignment.Data.Models;
 using Assignment.Hubs;
 using Assignment.Services.Posts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
@@ -11,8 +12,6 @@ using System.Threading.Tasks;
 
 namespace Assignment.Controllers
 {
-    //    [ApiController, Route("api/[controller]")]
-
     [ApiController]
     [Route("[controller]")]
     public class AssignmentController : ControllerBase
@@ -44,6 +43,7 @@ namespace Assignment.Controllers
             return _postsService.GetAllPostsByParams(searchParams);
         }
 
+        [Authorize]
         [HttpPost, Route("CreateOrUpdatePost")]
         public async Task<int> CreateOrUpdatePost(Post post)
         {
@@ -55,6 +55,7 @@ namespace Assignment.Controllers
             return InsertedId;
         }
 
+        [Authorize]
         [HttpPost, Route("DeletePost")]
         public async Task<bool> DeletePost([FromBody] int postId)
         {
