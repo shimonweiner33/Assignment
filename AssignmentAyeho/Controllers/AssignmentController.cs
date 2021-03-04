@@ -18,7 +18,7 @@ namespace Assignment.Controllers
     public class AssignmentController : ControllerBase
     {
         private IPostsService _postsService;
-        private readonly ILogger<AssignmentController> _logger;
+        //private readonly ILogger<AssignmentController> _logger;
         private readonly IHubContext<MessageHub> _messageHubContex;
 
         public AssignmentController(IPostsService postsService, IHubContext<MessageHub> messageHubContex)
@@ -50,8 +50,8 @@ namespace Assignment.Controllers
             int InsertedId =  await _postsService.CreateOrUpdatePost(post);
             post.Id = InsertedId;
             //broadcast the message to the clients
-            _messageHubContex.Clients.All.SendAsync("UpdatePost", post);
-
+            await _messageHubContex.Clients.All.SendAsync("UpdatePost", post);
+            //await _messageHubContex.Clients.User("123").SendAsync("UpdatePost", post);
             return InsertedId;
         }
 
@@ -66,7 +66,7 @@ namespace Assignment.Controllers
         public async Task<bool> SendMessage(string message)
         {
             //broadcast the message to the clients
-            _messageHubContex.Clients.All.SendAsync("Send", message);
+            await _messageHubContex.Clients.All.SendAsync("Send", message);
             return true;
         }
     }

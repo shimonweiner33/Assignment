@@ -31,6 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\components\alert\" />
+    <Folder Include="ClientApp\src\app\login\login\" />
     <Folder Include="ClientApp\src\app\middleware\" />
     <Folder Include="ClientApp\src\app\store\actions\types\" />
     <Folder Include="EventReceiver\" />

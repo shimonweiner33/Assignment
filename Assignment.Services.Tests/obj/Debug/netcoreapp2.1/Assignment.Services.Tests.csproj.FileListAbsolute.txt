@@ -50,3 +50,5 @@ C:\gihub\Assignment\Assignment.Services.Tests\obj\Debug\netcoreapp2.1\Assignment
 C:\gihub\Assignment\Assignment.Services.Tests\obj\Debug\netcoreapp2.1\Assignment.Services.Tests.dll
 C:\gihub\Assignment\Assignment.Services.Tests\obj\Debug\netcoreapp2.1\Assignment.Services.Tests.pdb
 C:\gihub\Assignment\Assignment.Services.Tests\obj\Debug\netcoreapp2.1\Assignment.Services.Tests.genruntimeconfig.cache
+C:\gihub\Assignment\Assignment.Services.Tests\bin\Debug\netcoreapp2.1\Assignment.Common.dll
+C:\gihub\Assignment\Assignment.Services.Tests\bin\Debug\netcoreapp2.1\Assignment.Common.pdb
