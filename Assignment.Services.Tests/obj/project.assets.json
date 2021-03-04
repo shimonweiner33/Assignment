@@ -1627,6 +1627,16 @@
           "build/netcoreapp2.1/xunit.runner.visualstudio.props": {}
         }
       },
+      "Assignment.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Assignment.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Assignment.Common.dll": {}
+        }
+      },
       "Assignment.Data/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -1647,6 +1657,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Assignment.Common": "1.0.0",
           "Assignment.Data": "1.0.0",
           "Microsoft.Extensions.Configuration": "5.0.0",
           "Microsoft.Extensions.DependencyInjection": "5.0.1",
@@ -5989,6 +6000,11 @@
         "xunit.runner.visualstudio.2.4.3.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "Assignment.Common/1.0.0": {
+      "type": "project",
+      "path": "../Assignment.Common/Assignment.Common.csproj",
+      "msbuildProject": "../Assignment.Common/Assignment.Common.csproj"
     },
     "Assignment.Data/1.0.0": {
       "type": "project",

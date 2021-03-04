@@ -22,3 +22,5 @@ C:\gihub\Assignment\Assignment.Services\obj\Debug\netstandard2.0\Assignment.Serv
 C:\gihub\Assignment\Assignment.Services\obj\Debug\netstandard2.0\Assignment.Services.csproj.CopyComplete
 C:\gihub\Assignment\Assignment.Services\obj\Debug\netstandard2.0\Assignment.Services.dll
 C:\gihub\Assignment\Assignment.Services\obj\Debug\netstandard2.0\Assignment.Services.pdb
+C:\gihub\Assignment\Assignment.Services\bin\Debug\netstandard2.0\Assignment.Common.dll
+C:\gihub\Assignment\Assignment.Services\bin\Debug\netstandard2.0\Assignment.Common.pdb

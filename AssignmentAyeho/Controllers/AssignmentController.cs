@@ -1,6 +1,7 @@
 ﻿using Assignment.Data.Models;
 using Assignment.Hubs;
 using Assignment.Services.Posts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
@@ -11,14 +12,12 @@ using System.Threading.Tasks;
 
 namespace Assignment.Controllers
 {
-    //    [ApiController, Route("api/[controller]")]
-
     [ApiController]
     [Route("[controller]")]
     public class AssignmentController : ControllerBase
     {
         private IPostsService _postsService;
-        private readonly ILogger<AssignmentController> _logger;
+        //private readonly ILogger<AssignmentController> _logger;
         private readonly IHubContext<MessageHub> _messageHubContex;
 
         public AssignmentController(IPostsService postsService, IHubContext<MessageHub> messageHubContex)
@@ -44,17 +43,19 @@ namespace Assignment.Controllers
             return _postsService.GetAllPostsByParams(searchParams);
         }
 
+        [Authorize]
         [HttpPost, Route("CreateOrUpdatePost")]
         public async Task<int> CreateOrUpdatePost(Post post)
         {
             int InsertedId =  await _postsService.CreateOrUpdatePost(post);
             post.Id = InsertedId;
             //broadcast the message to the clients
-            _messageHubContex.Clients.All.SendAsync("UpdatePost", post);
-
+            await _messageHubContex.Clients.All.SendAsync("UpdatePost", post);
+            //await _messageHubContex.Clients.User("123").SendAsync("UpdatePost", post);
             return InsertedId;
         }
 
+        [Authorize]
         [HttpPost, Route("DeletePost")]
         public async Task<bool> DeletePost([FromBody] int postId)
         {
@@ -66,7 +67,7 @@ namespace Assignment.Controllers
         public async Task<bool> SendMessage(string message)
         {
             //broadcast the message to the clients
-            _messageHubContex.Clients.All.SendAsync("Send", message);
+            await _messageHubContex.Clients.All.SendAsync("Send", message);
             return true;
         }
     }

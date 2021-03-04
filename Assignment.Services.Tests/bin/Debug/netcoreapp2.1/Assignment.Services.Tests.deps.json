@@ -1097,6 +1097,11 @@
         }
       },
       "xunit.runner.visualstudio/2.4.3": {},
+      "Assignment.Common/1.0.0": {
+        "runtime": {
+          "Assignment.Common.dll": {}
+        }
+      },
       "Assignment.Data/1.0.0": {
         "dependencies": {
           "Dapper": "2.0.78",
@@ -1110,6 +1115,7 @@
       },
       "Assignment.Services/1.0.0": {
         "dependencies": {
+          "Assignment.Common": "1.0.0",
           "Assignment.Data": "1.0.0",
           "Microsoft.Extensions.Configuration": "5.0.0",
           "Microsoft.Extensions.DependencyInjection": "5.0.1",
@@ -1749,6 +1755,11 @@
       "sha512": "sha512-kZZSmOmKA8OBlAJaquPXnJJLM9RwQ27H7BMVqfMLUcTi9xHinWGJiWksa3D4NEtz0wZ/nxd2mogObvBgJKCRhQ==",
       "path": "xunit.runner.visualstudio/2.4.3",
       "hashPath": "xunit.runner.visualstudio.2.4.3.nupkg.sha512"
+    },
+    "Assignment.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Assignment.Data/1.0.0": {
       "type": "project",

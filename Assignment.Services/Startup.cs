@@ -11,7 +11,8 @@ namespace Assignment.Services
         public static IServiceCollection AddCommonServices(this IServiceCollection services)
         {
             services.AddScoped<IPostsRepository, PostsRepository>();
-
+            services.AddSingleton<IMemberService, MemberService>();
+            services.AddSingleton<IAcountService, AcountService>();
             return services;
         }
     }
