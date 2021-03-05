@@ -66,7 +66,6 @@ namespace Assignment.Controllers
         [HttpPost, Route("logout")]
         public async Task<ActionResult> Logout()
         {
-            //Response.Cookies.Delete(AccountConst.CommanderCookie);
             await HttpContext.SignOutAsync(AccountConst.AppCookie);
             return Ok("user logout");
         }
