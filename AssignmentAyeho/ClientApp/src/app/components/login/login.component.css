@@ -1,0 +1,6 @@
+.login-frame{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}

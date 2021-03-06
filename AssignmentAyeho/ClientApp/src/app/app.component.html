@@ -1,10 +1,18 @@
 <body>
-  <h1 id="main-content-header">{{title}}</h1>
-  <nav>
-    <button routerLink="/post-list">חדר ראשי</button>
-    <button routerLink="/login">התחברות</button>
-    <button routerLink="/logout">התנתקות</button>
-    <button routerLink="/register">הרשמה</button>
+  <div class="top-row">
+    <div class="main-title-frame">
+      <h1 class="main-title-content">{{title}}</h1>
+    </div>
+  </div>
+<div class="nav-main">
+  <nav class="nav-options">
+    <button class="nav-btn" routerLink="/post-list">חדר ראשי</button>
+    <button class="nav-btn" (click)="logout()">התנתקות</button>
+    <button class="nav-btn" routerLink="/register">הרשמה</button>
+    <button class="nav-btn" routerLink="/login">התחברות</button>
   </nav>
-  <router-outlet></router-outlet>
+</div>
+<div class="forum-frame">
+    <router-outlet></router-outlet>
+</div>
 </body>

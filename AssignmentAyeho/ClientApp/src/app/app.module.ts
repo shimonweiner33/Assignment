@@ -30,9 +30,9 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       // { path: '', component: HomeComponent, pathMatch: 'full' },
-      // { path: '', redirectTo: 'post-list', pathMatch: 'full' },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
-      { path: 'logout', component: LogoutComponent },
+      // { path: 'logout', component: LogoutComponent },
       { path: 'post-list', component: PostListComponent },
     ]),
     AppRoutingModule

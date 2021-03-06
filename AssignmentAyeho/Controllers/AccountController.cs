@@ -37,13 +37,15 @@ namespace Assignment.Controllers
             {
                 var loginResult = new LoginResultModel();
                 var member = await memberService.GetMember(login);
-                if (member == null)
-                {
-                    loginResult.Error = "שם משתמש או סיסמא לא תקינים";
+                //if (member == null)todo add
+                //{
+                //    loginResult.Error = "שם משתמש או סיסמא לא תקינים";
 
-                    return Ok(loginResult);
-                }
+                //    return Ok(loginResult);
+                //}
                 await SignInUser(login, member);
+                loginResult.Member = member;
+                loginResult.Member = new Member() { FirstName = "ddd", LastName = "ggg" };//todo remove
                 loginResult.IsUserAuth = true;
 
                 return Ok(loginResult);
