@@ -37,13 +37,15 @@ namespace Assignment.Controllers
             {
                 var loginResult = new LoginResultModel();
                 var member = await memberService.GetMember(login);
-                if (member == null)
-                {
-                    loginResult.Error = "שם משתמש או סיסמא לא תקינים";
+                //if (member == null)todo add
+                //{
+                //    loginResult.Error = "שם משתמש או סיסמא לא תקינים";
 
-                    return Ok(loginResult);
-                }
+                //    return Ok(loginResult);
+                //}
                 await SignInUser(login, member);
+                loginResult.Member = member;
+                loginResult.Member = new Member() { FirstName = "ddd", LastName = "ggg" };//todo remove
                 loginResult.IsUserAuth = true;
 
                 return Ok(loginResult);
@@ -66,7 +68,6 @@ namespace Assignment.Controllers
         [HttpPost, Route("logout")]
         public async Task<ActionResult> Logout()
         {
-            //Response.Cookies.Delete(AccountConst.CommanderCookie);
             await HttpContext.SignOutAsync(AccountConst.AppCookie);
             return Ok("user logout");
         }
@@ -86,7 +87,7 @@ namespace Assignment.Controllers
 
             var authenticationProperties = new AuthenticationProperties
             {
-                ExpiresUtc = loginModel.RememberMe ? DateTimeOffset.UtcNow.AddDays(UserCookieExpireTimeDays) : DateTimeOffset.UtcNow.AddMinutes(userCookieExpireTimeMinutes),
+                ExpiresUtc = loginModel.RememberMe ? DateTimeOffset.UtcNow.AddHours(2).AddDays(UserCookieExpireTimeDays) : DateTimeOffset.UtcNow.AddHours(2).AddMinutes(userCookieExpireTimeMinutes),
                 IsPersistent = true
             };
 

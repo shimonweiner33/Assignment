@@ -10,6 +10,5 @@ namespace Assignment.Data.Models
         public string LastName { get; set; }
         public string PhoneArea { get; set; }
         public string PhoneNumber { get; set; }
-
     }
 }

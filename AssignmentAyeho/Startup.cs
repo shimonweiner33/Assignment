@@ -37,6 +37,10 @@ namespace Assignment
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
             }
+            else
+            {
+                options.Cookie.HttpOnly = false;
+            }
 
             options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents()
             {
@@ -58,6 +62,16 @@ namespace Assignment
             services.AddControllers();
             services.AddRepositories();
             services.AddCommonServices();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:44353", "http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                });
+            });
+
             services.AddSignalR();
         }
 
@@ -65,10 +79,6 @@ namespace Assignment
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            //app.UseSignalR(routes =>
-            //{
-            //    routes.MapHub<MessageHub>("message");
-            //});
 
             app.UseSignalR(routes =>
             {
@@ -95,7 +105,7 @@ namespace Assignment
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
@@ -105,7 +115,7 @@ namespace Assignment
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseCors("CorsPolicy");
+            app.UseCors("CorsPolicy");
             //app.UseMvc();
             app.UseEndpoints(endpoints =>
             {
