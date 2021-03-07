@@ -87,7 +87,7 @@ namespace Assignment.Controllers
 
             var authenticationProperties = new AuthenticationProperties
             {
-                ExpiresUtc = loginModel.RememberMe ? DateTimeOffset.UtcNow.AddDays(UserCookieExpireTimeDays) : DateTimeOffset.UtcNow.AddMinutes(userCookieExpireTimeMinutes),
+                ExpiresUtc = loginModel.RememberMe ? DateTimeOffset.UtcNow.AddHours(2).AddDays(UserCookieExpireTimeDays) : DateTimeOffset.UtcNow.AddHours(2).AddMinutes(userCookieExpireTimeMinutes),
                 IsPersistent = true
             };
 
