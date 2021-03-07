@@ -17,55 +17,39 @@ export class AuthenticationService {
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
-  // login(username: string, password: string) {
-  //   return this.http.post<any>(`https://localhost:44353/api/Account/Login`, { username, password })
-  //    .subscribe((user: any) => {
 
-  //       this.currentUserSubject.next(user);
-  //      }
   login(username: string, password: string) {
-    // return this.http.post<any>(`https://localhost:44353/api/Account/Login`, { username, password },
-    //  { observe: 'response', withCredentials: true })
-    //   .subscribe((user: any) => {
-    //     //this.currentUserSubject.next(user);
-    //   }, err => {
+    return this.http.post<any>(`https://localhost:44353/api/Account/Login`, { username, password },
+     { observe: 'response', withCredentials: true })
+      .subscribe((data: any) => {
+        this.currentUserSubject.next(data.body);
+      }, err => {
 
-    //   })
-    fetch('https://localhost:44353/api/Account/Login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'same-origin',
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    }).then(res => {
-      console.log(res.headers.get('set-cookie')); // undefined
-      console.log(document.cookie); // nope
-      return res.json();
-    }).then(json => {
-      if (json.success) {
-        //this.setState({ error: '' });
-        //this.context.router.push(json.redirect);
-      }
-      else {
-        //this.setState({ error: json.error });
-      }
-    });
-
-    // .pipe(map(user => {
-    //     // login successful if there's a jwt token in the response
-    //     if (user && user.token) {
-    //         // store user details and jwt token in local storage to keep user logged in between page refreshes
-    //         localStorage.setItem('currentUser', JSON.stringify(user));
-    //         this.currentUserSubject.next(user);
-    //     }
-
-    //     return user;
-    // }));
+      })
+    // fetch('https://localhost:44353/api/Account/Login', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   credentials: 'same-origin',
+    //   body: JSON.stringify({
+    //     username: username,
+    //     password: password,
+    //   }),
+    // }).then(res => {
+    //   // console.log(res.headers.get('set-cookie')); // undefined
+    //   // console.log(document.cookie); // nope
+    //   return res.json();
+    // }).then(json => {
+    //   if (json.success) {
+    //     //this.setState({ error: '' });
+    //     //this.context.router.push(json.redirect);
+    //   }
+    //   else {
+    //     //this.setState({ error: json.error });
+    //   }
+    // });
   }
 
   logout() {
