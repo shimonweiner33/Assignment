@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from '../../services/authentication.service';
 import { Post } from './../../models/posts-display.model';
 import { HubsService } from './../../services/hubs.service';
 import { PostsService } from './../../services/post-display.service';
@@ -17,8 +18,8 @@ export class PostListComponent implements OnInit {
   filteredPostList: any = [];
   searchControl: FormControl = new FormControl('');
   postFormGroup: FormGroup;
-
-  constructor(private postsService: PostsService, private route: ActivatedRoute, private hubsService: HubsService) {
+  fileToUpload: File = null;
+  constructor(private postsService: PostsService, private route: ActivatedRoute, private hubsService: HubsService,private authenticationService: AuthenticationService) {
   }
   ngOnInit() {
     this.postsService.postList$.subscribe((posts: any) => {

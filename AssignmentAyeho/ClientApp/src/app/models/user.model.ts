@@ -1,7 +1,7 @@
 export class User {
-    Member: Member;
-    Error: string;
-    IsUserAuth: boolean;
+    member: Member;
+    error: string;
+    isUserAuth: boolean;
     //token: string;
 }
 export class Member{

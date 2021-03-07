@@ -50,7 +50,7 @@ namespace Assignment.Controllers
             int InsertedId =  await _postsService.CreateOrUpdatePost(post);
             post.Id = InsertedId;
             //broadcast the message to the clients
-            await _messageHubContex.Clients.All.SendAsync("UpdatePost", post);
+            await _messageHubContex.Clients.All.SendAsync("CreateOrUpdatePost", post);
             //await _messageHubContex.Clients.User("123").SendAsync("UpdatePost", post);
             return InsertedId;
         }

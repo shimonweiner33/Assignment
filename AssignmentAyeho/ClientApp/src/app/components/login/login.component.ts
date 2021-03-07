@@ -18,10 +18,11 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private router: Router) {
-    // redirect to home if already logged in
-    // if (this.authenticationService.currentUserValue) {
-    //   this.router.navigate(['/']);
+    //redirect to home if already logged in
+    // if (this.authenticationService.currentUserValue?.isUserAuth) {
+    //   this.router.navigate(['/post-list']);
     // }
+
   }
 
   ngOnInit() {
@@ -34,24 +35,16 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.currentUser.subscribe(
       data => {
-        if (this.isCookieExist()) {
+        if (this.authenticationService.isCookieExist()) {
            this.router.navigate(['/post-list']);
         }
       },
       error => {
         this.loading = false;
       });
-  }
-
-  isCookieExist() {
-    var myCookie = this.getCookie("AppCookie");
-
-    if (myCookie == null) {
-      return false
-    }
-    else {
-      return true;
-    }
+      if (this.authenticationService.isLogin) {
+        this.router.navigate(['/post-list']);
+      }
   }
   get f() { return this.loginForm.controls; }
 
@@ -66,26 +59,6 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     this.authenticationService.login(this.f.username.value, this.f.password.value)
-    //this.router.navigate([this.returnUrl]);  
-  }
-
-  getCookie(name) {
-    var dc = document.cookie;
-    var prefix = name + "=";
-    var begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
-      begin = dc.indexOf(prefix);
-      if (begin != 0) return null;
-    }
-    else {
-      begin += 2;
-      var end = document.cookie.indexOf(";", begin);
-      if (end == -1) {
-        end = dc.length;
-      }
-    }
-    // because unescape has been deprecated, replaced with decodeURI
-    //return unescape(dc.substring(begin + prefix.length, end));
-    return decodeURI(dc.substring(begin + prefix.length, end));
+    //this.router.navigate([this.returnUrl]);
   }
 }
