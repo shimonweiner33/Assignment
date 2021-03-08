@@ -7,6 +7,6 @@ namespace Assignment.Services
     public interface IAcountService
     {
         Task<bool> IsValidUser(Login login);
-        Task<bool> Register(Login login);
+        Task<bool> Register(Register registerDetails);
     }
 }

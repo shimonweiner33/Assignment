@@ -22,6 +22,9 @@ export class LoginComponent implements OnInit {
     // if (this.authenticationService.currentUserValue?.isUserAuth) {
     //   this.router.navigate(['/post-list']);
     // }
+    if (this.authenticationService.isLogin) {
+      this.router.navigate(['/post-list']);
+    }
 
   }
 
@@ -35,16 +38,16 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.currentUser.subscribe(
       data => {
-        if (this.authenticationService.isCookieExist()) {
-           this.router.navigate(['/post-list']);
+        if (this.authenticationService.isLogin) {
+          this.router.navigate(['/post-list']);
         }
+        // if (this.authenticationService.isCookieExist()) {
+        //    this.router.navigate(['/post-list']);
+        // }
       },
       error => {
         this.loading = false;
       });
-      if (this.authenticationService.isLogin) {
-        this.router.navigate(['/post-list']);
-      }
   }
   get f() { return this.loginForm.controls; }
 

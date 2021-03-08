@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PostComponent } from './components/post/post.component';
+import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
@@ -22,6 +23,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     PostListComponent,
     LoginComponent,
     LogoutComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +34,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
       // { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: '', redirectTo: 'app', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
-      // { path: 'logout', component: LogoutComponent },
+      { path: 'register', component: RegisterComponent },
       { path: 'post-list', component: PostListComponent },
     ]),
     AppRoutingModule

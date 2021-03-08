@@ -7,7 +7,7 @@
 <div class="nav-main">
   <nav class="nav-options">
     <button class="nav-btn" routerLink="/post-list">חדר ראשי</button>
-    <button class="nav-btn" routerLink="/register">הרשמה</button>
+    <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/register">הרשמה</button>
     <button class="nav-btn" *ngIf="authenticationService.isLogin" (click)="logout()">התנתקות</button>
     <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/login">התחברות</button>
   </nav>

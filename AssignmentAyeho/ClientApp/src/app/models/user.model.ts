@@ -11,3 +11,12 @@ export class Member{
     // username: string;
     // password: string;
 }
+export class Register{
+    username: string;
+    password: string;
+    verificationPassword: string;
+    firstName: string;
+    lastName: string;
+    phoneArea: string;
+    phoneNumber: string;
+}

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../models/user.model';
+import { Register, User } from '../models/user.model';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
@@ -31,6 +31,21 @@ export class AuthenticationService {
 
       })
   }
+  register(registerDetails: Register) {
+
+    return this.http.post<any>(`https://localhost:44353/api/Account/Register`,  registerDetails,
+      { observe: 'response', withCredentials: true })
+      .subscribe((data: any) => {
+        if(data){
+          if(data.body && data.body.isUserAuth){
+            this.isLogin = true;
+          }
+          this.currentUserSubject.next(data.body);
+        }
+      }, err => {
+
+      })
+  }
 
   logout() {
 
@@ -38,8 +53,8 @@ export class AuthenticationService {
       if(this.currentUserValue && this.currentUserValue.isUserAuth){
         this.isLogin = false;
       }
-      this.currentUserSubject.next(null);  
-    
+      this.currentUserSubject.next(null);
+
     // const list = this._postListResponse$.getValue();
     //   list.posts = list.posts.filter(x => x.id !== postId);
     //   this._postListResponse$.next(list)
@@ -64,7 +79,7 @@ export class AuthenticationService {
   isCookieExist() {
     var myCookie = this.getCookie("AppCookie");
 
-    if (myCookie == null) {
+    if (myCookie === null) {
       return false
     }
     else {
@@ -75,14 +90,14 @@ export class AuthenticationService {
     var dc = document.cookie;
     var prefix = name + "=";
     var begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
+    if (begin === -1) {
       begin = dc.indexOf(prefix);
       if (begin != 0) return null;
     }
     else {
       begin += 2;
       var end = document.cookie.indexOf(";", begin);
-      if (end == -1) {
+      if (end === -1) {
         end = dc.length;
       }
     }

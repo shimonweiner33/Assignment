@@ -37,15 +37,14 @@ namespace Assignment.Controllers
             {
                 var loginResult = new LoginResultModel();
                 var member = await memberService.GetMember(login);
-                //if (member == null)todo add
-                //{
-                //    loginResult.Error = "שם משתמש או סיסמא לא תקינים";
+                if (member == null)
+                {
+                    loginResult.Error = "שם משתמש או סיסמא לא תקינים";
 
-                //    return Ok(loginResult);
-                //}
+                    return Ok(loginResult);
+                }
                 await SignInUser(login, member);
                 loginResult.Member = member;
-                loginResult.Member = new Member() { FirstName = "ddd", LastName = "ggg" };//todo remove
                 loginResult.IsUserAuth = true;
 
                 return Ok(loginResult);
@@ -59,9 +58,28 @@ namespace Assignment.Controllers
 
         [AllowAnonymous]
         [HttpPost, Route("Register")]
-        public async void Register(Login login)
+        public async Task<ActionResult> Register([FromBody] Register registerDetails)
         {
-            var member = await acountService.Register(login);
+            Login login = null;
+            bool isRegister = false;
+            try
+            {
+                isRegister = await acountService.Register(registerDetails);
+                if (isRegister)
+                {
+                    login = new Login()
+                    {
+                        Password = registerDetails.VerificationPassword,
+                        UserName = registerDetails.UserName
+                    };
+                    return await this.Login(login);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Ok(false);
         }
 
 
