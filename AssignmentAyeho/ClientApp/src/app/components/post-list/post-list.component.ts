@@ -61,9 +61,11 @@ export class PostListComponent implements OnInit {
       image: new FormControl(''),
       title: new FormControl(''),
       isFavorite: new FormControl(false),
+      roomNum: new FormControl(1)
     });
   }
   updatePost(post: Post) {
+    post.roomNum = (post.roomNum === 0 )? 1 : post.roomNum;
     this.postsService.UpdatePost(post);
   }
 

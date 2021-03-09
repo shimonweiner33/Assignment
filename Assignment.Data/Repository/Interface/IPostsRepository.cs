@@ -9,7 +9,7 @@ namespace Assignment.Data.Repository.Interface
     public interface IPostsRepository
     {
         Task<Post> GetPostById(int postId);
-        Task<PostsList> GeAllPosts();
+        Task<PostsList> GeAllPosts(int roomNum);
         Task<PostsList> GetAllPostsByParams(Post post);
         Task<int> CreateOrUpdatePost(Post post);
         Task<bool> DeletePost(int postId);

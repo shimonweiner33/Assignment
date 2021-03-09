@@ -1,28 +1,30 @@
 <form [formGroup]="postFormGroup">
-  
-    <label>
-        author:
-      <input type="text" formControlName="author" class="form__field">
-    </label>
-  
-    <label>
-        comment:
-      <input type="text" formControlName="comment" class="form__field">
-    </label>
-    <label>
-        image:
-      <input type="text" formControlName="image" class="form__field">
-    </label>
-    <label>
-        title:
-      <input type="text" formControlName="title" class="form__field">
-    </label>
-    <label>
-        isFavorite:
-      <input type="checkbox" formControlName="isFavorite" class="form__field">
-    </label>
-  
-  </form>
+  <label>
+    user name: {{post.userName}}
+</label>
+<br/>
+  <label>
+    author:
+    <input type="text" formControlName="author" class="form__field">
+  </label>
+
+  <label>
+    comment:
+    <input type="text" formControlName="comment" class="form__field">
+  </label>
+  <label>
+    image:
+    <input type="text" formControlName="image" class="form__field">
+  </label>
+  <label>
+    title:
+    <input type="text" formControlName="title" class="form__field">
+  </label>
+  <label>
+    isFavorite:
+    <input type="checkbox" formControlName="isFavorite" class="form__field">
+  </label>
+</form>
 
 
 <button (click)="update()">עדכון</button>

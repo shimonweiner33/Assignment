@@ -14,12 +14,12 @@ export class PostsService {
   public postList$ = this._postListResponse$.asObservable();
 
   constructor(private http: HttpClient, private hubsService: HubsService) {
-    this.GetPostList(null);
+    this.GetPostList(1);
   }
-  GetPostList(posts: Posts) {
+  GetPostList(roomNum: Number) {
 
     this._postListResponse$.next(null)
-    this.http.get("https://localhost:44353/Assignment/GeAllPosts").subscribe((res: Posts) => {
+    this.http.get("https://localhost:44353/Assignment/GeAllPosts?roomNum="+roomNum).subscribe((res: Posts) => {
       this._postListResponse$.next(res)
 
     }, err => {

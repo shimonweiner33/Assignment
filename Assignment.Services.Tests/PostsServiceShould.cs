@@ -33,11 +33,11 @@ namespace Assignment.Services.Tests
             // Arrange
             PostsList resultData;
             bool actualResult;
-
+            int mainRoom = 1;
             // Act
             try
             {
-                resultData = await _postsService.GetAllPosts();
+                resultData = await _postsService.GetAllPosts(mainRoom);
                 actualResult = resultData.Posts != null && resultData.Posts.Count > 0;
             }
             catch

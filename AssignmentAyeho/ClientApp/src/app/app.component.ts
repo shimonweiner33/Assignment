@@ -16,18 +16,18 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    this.authenticationService.currentUser.subscribe(
-      data => {
-        if (data && data.isUserAuth) {
-          this.isLogin = true
-        }
-        else {
-          this.isLogin = false
-        }
-      },
-      error => {
-        this.isLogin = false;
-      });
+    // this.authenticationService.currentUser.subscribe(
+    //   data => {
+    //     if (data && data.isUserAuth) {
+    //       this.isLogin = true
+    //     }
+    //     else {
+    //       this.isLogin = false
+    //     }
+    //   },
+    //   error => {
+    //     this.isLogin = false;
+    //   });
   }
   title = 'פורום';
 
