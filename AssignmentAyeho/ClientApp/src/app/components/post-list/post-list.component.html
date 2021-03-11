@@ -1,6 +1,6 @@
 <ng-container>
     <input [formControl]="searchControl" type="text">
-    <label>
+    <label class="post-details-label">
         חיפוש כותרת
     </label>
 
@@ -13,24 +13,24 @@
     <div *ngIf="openDialogAdd">
         <form [formGroup]="postFormGroup">
 
-            <label>
+            <label class="post-details-label">
                 author:
                 <input type="text" formControlName="author" class="form__field" >
             </label>
 
-            <label>
+            <label class="post-details-label">
                 comment:
                 <input type="text" formControlName="comment" class="form__field" >
             </label>
-            <label>
+            <label class="post-details-label">
                 image:
                 <input type="text" formControlName="image" class="form__field" >
             </label>
-            <label>
+            <label class="post-details-label">
                 title:
                 <input type="text" formControlName="title" class="form__field">
             </label>
-            <label>
+            <label class="post-details-label">
                 isFavorite:
                 <input type="checkbox" formControlName="isFavorite">
             </label>

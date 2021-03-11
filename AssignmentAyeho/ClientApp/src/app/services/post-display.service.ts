@@ -59,10 +59,6 @@ export class PostsService {
 
     })
   }
-  // private getData<T>(url: string): Observable<T> {
-
-  //   return this.http.get<T>(url)
-  // }
   updatePostListAfterChangesByOther() {
     this.hubsService._hubConnecton.on('CreateOrUpdatePost', post => {
       const list = this._postListResponse$.getValue();
@@ -74,13 +70,6 @@ export class PostsService {
         list.posts.push(post);
       }
       this._postListResponse$.next(list)
-      // const index = this.postList.indexOf(post);
-      // if (index > -1) {
-      //   this.postList[index] = post;
-      // }
-      // else {
-      //   this.postList.push(post);
-      // }
       console.log(post);
     });
   }

@@ -54,23 +54,9 @@ export class AuthenticationService {
         this.isLogin = false;
       }
       this.currentUserSubject.next(null);
-
-    // const list = this._postListResponse$.getValue();
-    //   list.posts = list.posts.filter(x => x.id !== postId);
-    //   this._postListResponse$.next(list)
     }, err => {
 
     })
-
-    // return this.http.post<any>(`https://localhost:44353/api/Account/Logout`, null, { observe: 'response', withCredentials: true })
-    //   .subscribe((data: any) => {
-    //     if(this.currentUserValue && this.currentUserValue.isUserAuth){
-    //       this.isLogin = false;
-    //     }
-    //     this.currentUserSubject.next(null);
-    //   }, err => {
-
-    //   });
   }
 
 

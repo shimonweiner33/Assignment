@@ -7,8 +7,8 @@ export class User {
 export class Member{
     firstName: string;
     lastName: string;
+    username: string;
     //id: number;
-    // username: string;
     // password: string;
 }
 export class Register{
@@ -19,4 +19,16 @@ export class Register{
     lastName: string;
     phoneArea: string;
     phoneNumber: string;
+}
+export interface ExtendMember 
+{
+    firstName: string;
+    lastName: string;
+    username: string;
+    phoneArea: string;
+    phoneNumber: string;
+    UserConnectinonId: string;
+}
+export interface ConnectedUsers{
+    members: ExtendMember[];
 }

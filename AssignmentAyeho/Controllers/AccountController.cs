@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication;
 using Assignment.Services.Constants;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
+using Assignment.Data.Repository.Interface;
 
 namespace Assignment.Controllers
 {
@@ -17,17 +18,19 @@ namespace Assignment.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IMemberService memberService;
-        private readonly IAcountService acountService;
-        private readonly IConfiguration configuration;
+        private readonly IMemberService _memberService;
+        private readonly IAcountService _acountService;
+        private readonly IConnectionsRepository _connectionsRepository;
+        private readonly IConfiguration _configuration;
         private const int UserCookieExpireTimeDays = 365;
 
 
-        public AccountController(IMemberService memberService, IAcountService acountService, IConfiguration configuration)
+        public AccountController(IMemberService memberService, IAcountService acountService, IConfiguration configuration, IConnectionsRepository connectionsRepository)
         {
-            this.configuration = configuration;
-            this.memberService = memberService;
-            this.acountService = acountService;
+            this._configuration = configuration;
+            this._memberService = memberService;
+            this._acountService = acountService;
+            this._connectionsRepository = connectionsRepository;
         }
         [AllowAnonymous]
         [HttpPost, Route("Login")]
@@ -36,7 +39,7 @@ namespace Assignment.Controllers
             try
             {
                 var loginResult = new LoginResultModel();
-                var member = await memberService.GetMember(login);
+                var member = await _memberService.GetMember(login);
                 if (member == null)
                 {
                     loginResult.Error = "שם משתמש או סיסמא לא תקינים";
@@ -64,7 +67,7 @@ namespace Assignment.Controllers
             bool isRegister = false;
             try
             {
-                isRegister = await acountService.Register(registerDetails);
+                isRegister = await _acountService.Register(registerDetails);
                 if (isRegister)
                 {
                     login = new Login()
@@ -93,7 +96,7 @@ namespace Assignment.Controllers
         private async Task SignInUser(Login loginModel, Member member)
         {
             int userCookieExpireTimeMinutes = 20;
-            int.TryParse(configuration["AccountSettings:UserCookieExpireTimeMinutes"], out userCookieExpireTimeMinutes);
+            int.TryParse(_configuration["AccountSettings:UserCookieExpireTimeMinutes"], out userCookieExpireTimeMinutes);
 
             var claims = new List<Claim>
             {
@@ -110,6 +113,11 @@ namespace Assignment.Controllers
             };
 
             await HttpContext.SignInAsync(AccountConst.AppCookie, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
+        }
+        [HttpGet, Route("GeAllLogInUsers")]
+        public Task<ExtendMembers> GeAllLogInUsers()
+        {
+            return _connectionsRepository.GeAllLogInUsers();
         }
     }
 }

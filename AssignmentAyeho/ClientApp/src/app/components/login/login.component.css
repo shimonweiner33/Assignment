@@ -4,3 +4,10 @@
     flex-direction: column;
     width: 300px;
 }
+.login-content{
+    width: 18%;
+}
+.login-frame{
+    display: flex;
+    width: 100%;
+}

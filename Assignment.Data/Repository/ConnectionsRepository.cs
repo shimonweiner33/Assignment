@@ -60,7 +60,7 @@ namespace Assignment.Data.Repository
             }
             catch (Exception ex)
             {
-                //siteLogger.InsertAsync(LogLevel.Error, 0, $"AccountRepository-IsValidUser, TZ:{loginModel.UserName}, Exception: {ex.ToString()}");
+                //siteLogger.InsertAsync(LogLevel.Error, 0, $"ConnectionsRepository-UpdateConnectionId, Exception: {ex.ToString()}");
                 throw;
             }
         }
@@ -84,6 +84,52 @@ namespace Assignment.Data.Repository
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        public async Task<ExtendMembers> GeAllLogInUsers()
+        {
+            try
+            {
+                using (IDbConnection conn = Connection)
+                {
+                    var sQuery = @"SELECT m.UserName, FirstName, LastName, PhoneNumber, PhoneArea, con.UserConnectinonId FROM Member AS m INNER JOIN Connections AS con 
+                                   ON m.UserName = con.UserName";
+
+                    conn.Open();
+                    var members = (await conn.QueryAsync<ExtendMember>(sQuery)).ToList();
+                    return new ExtendMembers() { Members = members };
+                }
+            }
+            catch (Exception ex)
+            {
+                //siteLogger.InsertAsync(LogLevel.Error, 0, $"ConnectionsRepository-GeAllLogInUsers, Exception: {ex.ToString()}");
+                throw;
+            }
+        }
+
+        public async Task<ExtendMember> GeUserConnection(string userName)
+        {
+            try
+            {
+                using (IDbConnection conn = Connection)
+                {
+                    var sQuery = @"SELECT m.UserName, FirstName, LastName, PhoneNumber, PhoneArea, con.UserConnectinonId FROM Member AS m INNER JOIN Connections AS con 
+                                   ON m.UserName = con.UserName WHERE con.UserName = @userName";
+
+                    conn.Open();
+
+                    var member = (await conn.QueryAsync<ExtendMember>(sQuery, new
+                    {
+                        userName
+                    })).FirstOrDefault();
+
+                    return member;
+                }
+            }
+            catch (Exception ex)
+            {
+                //siteLogger.InsertAsync(LogLevel.Error, 0, $"ConnectionsRepository-GeAllLogInUsers, Exception: {ex.ToString()}");
+                throw;
             }
         }
     }

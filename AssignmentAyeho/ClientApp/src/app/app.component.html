@@ -4,15 +4,27 @@
       <h1 class="main-title-content">{{title}}</h1>
     </div>
   </div>
-<div class="nav-main">
-  <nav class="nav-options">
-    <button class="nav-btn" routerLink="/post-list">חדר ראשי</button>
-    <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/register">הרשמה</button>
-    <button class="nav-btn" *ngIf="authenticationService.isLogin" (click)="logout()">התנתקות</button>
-    <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/login">התחברות</button>
-  </nav>
-</div>
-<div class="forum-frame">
-    <router-outlet></router-outlet>
-</div>
+  <div class="nav-main">
+    <nav class="nav-options">
+      <button class="nav-btn" routerLink="/post-list">חדר ראשי</button>
+      <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/register">הרשמה</button>
+      <button class="nav-btn" *ngIf="authenticationService.isLogin" (click)="logout()">התנתקות</button>
+      <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/login">התחברות</button>
+    </nav>
+  </div>
+  <div class="forum-frame">
+    <!-- <div class="login-list" *ngFor="let user of logInUsersList">
+      user: {{user.userName}}
+    </div> -->
+    <div class="login-list">
+      <h6>משתמשים מחוברים</h6>
+      <ul>
+        <li *ngFor="let user of logInUsersList">{{user.firstName}}  {{user.lastName}}
+      </ul>
+    </div>
+    <div class="forum-body">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
 </body>

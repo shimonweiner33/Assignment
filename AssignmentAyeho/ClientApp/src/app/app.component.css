@@ -9,18 +9,19 @@ body{
   display:flex;
   justify-content: center;
   font-family: fantasy;
-  .main-title-content {
-    margin-bottom: 0;
-  }
+}
+.main-title-content {
+  margin-bottom: 0;
+}
+.login-content{
+  width: 18%;
 }
 .nav-main{
   display: flex;
   justify-content: flex-end;
   background-color: darkgoldenrod;
 }
-.forum-frame{
-  margin: 10px 40px 10px 40px;
-}
+
 .nav-btn {
   padding: 1rem;
   text-decoration: none;
@@ -37,4 +38,13 @@ body{
 }
 .nav-btn.active {
   background-color: black;
+}
+.forum-frame{
+  display:flex;
+}
+.login-list{
+  width: 15%;
+}
+.forum-body{
+  width: 85%;
 }

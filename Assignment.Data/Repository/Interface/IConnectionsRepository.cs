@@ -10,5 +10,7 @@ namespace Assignment.Data.Repository.Interface
     {
         Task<bool> UpdateConnectionId(string userName, string onnectionId);
         Task<bool> DeleteConnectionId(string userName, string connectionId);
+        Task<ExtendMembers> GeAllLogInUsers();
+        Task<ExtendMember> GeUserConnection(string userName);
     }
 }
