@@ -48,3 +48,13 @@ body{
 .forum-body{
   width: 85%;
 }
+.add-room-dialog{
+  display:flex;
+}
+.room-form-group{
+  display:flex;
+  align-items: center;
+}
+.nav-options{
+  display:flex;
+}

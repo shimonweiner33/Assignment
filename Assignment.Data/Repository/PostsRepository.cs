@@ -41,7 +41,7 @@ namespace Assignment.Data.Repository
             }
 
         }
-        public async Task<PostsList> GeAllPosts(int roomNum)
+        public async Task<PostsList> GetAllPosts(int roomNum)
         {
             try
             {

@@ -19,7 +19,7 @@ export class PostsService {
   GetPostList(roomNum: Number) {
 
     this._postListResponse$.next(null)
-    this.http.get("https://localhost:44353/Assignment/GeAllPosts?roomNum="+roomNum).subscribe((res: Posts) => {
+    this.http.get("https://localhost:44353/Assignment/GetAllPosts?roomNum="+roomNum).subscribe((res: Posts) => {
       this._postListResponse$.next(res)
 
     }, err => {

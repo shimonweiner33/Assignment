@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
     member.password = this.f.password.value;
     member.phoneArea = this.f.phoneArea.value;
     member.phoneNumber = this.f.phoneNumber.value;
-    member.username = this.f.username.value;
+    member.userName = this.f.username.value;
 
 
     this.authenticationService.register(member)

@@ -11,6 +11,7 @@ using Assignment.Services.Constants;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using Assignment.Data.Repository.Interface;
+using Assignment.Services.Connections;
 
 namespace Assignment.Controllers
 {
@@ -20,17 +21,18 @@ namespace Assignment.Controllers
     {
         private readonly IMemberService _memberService;
         private readonly IAcountService _acountService;
-        private readonly IConnectionsRepository _connectionsRepository;
+        private readonly IConnectionsService _connectionsService;
         private readonly IConfiguration _configuration;
         private const int UserCookieExpireTimeDays = 365;
 
 
-        public AccountController(IMemberService memberService, IAcountService acountService, IConfiguration configuration, IConnectionsRepository connectionsRepository)
+        public AccountController(IMemberService memberService, IAcountService acountService, IConfiguration configuration,
+            IConnectionsService connectionsService)
         {
             this._configuration = configuration;
             this._memberService = memberService;
             this._acountService = acountService;
-            this._connectionsRepository = connectionsRepository;
+            this._connectionsService = connectionsService;
         }
         [AllowAnonymous]
         [HttpPost, Route("Login")]
@@ -89,8 +91,9 @@ namespace Assignment.Controllers
         [HttpPost, Route("logout")]
         public async Task<ActionResult> Logout()
         {
+            string userName = User.Identity.Name;
             await HttpContext.SignOutAsync(AccountConst.AppCookie);
-            return Ok("user logout");
+            return Ok(userName);
         }
 
         private async Task SignInUser(Login loginModel, Member member)
@@ -114,10 +117,10 @@ namespace Assignment.Controllers
 
             await HttpContext.SignInAsync(AccountConst.AppCookie, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
         }
-        [HttpGet, Route("GeAllLogInUsers")]
-        public Task<ExtendMembers> GeAllLogInUsers()
+        [HttpGet, Route("GetAllLogInUsers")]
+        public Task<ExtendMembers> GetAllLogInUsers()
         {
-            return _connectionsRepository.GeAllLogInUsers();
+            return _connectionsService.GetAllLogInUsers();
         }
     }
 }

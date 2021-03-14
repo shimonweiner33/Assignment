@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { LogoutComponent } from './components/logout/logout.component';
+//import { LogoutComponent } from './components/logout/logout.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PostComponent } from './components/post/post.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -22,7 +22,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     PostComponent,
     PostListComponent,
     LoginComponent,
-    LogoutComponent,
+    //LogoutComponent,
     RegisterComponent,
   ],
   imports: [

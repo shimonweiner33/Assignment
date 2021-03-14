@@ -1,5 +1,5 @@
 ﻿using Assignment.Data.Models;
-using Assignment.Hubs;
+using Assignment.Services.Hubs;
 using Assignment.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,8 +36,8 @@ namespace Assignment.Controllers
         //    return postsService.GetPostById(postId);
         //}
 
-        [HttpGet, Route("GeAllPosts")]
-        public Task<PostsList> GeAllPosts(int roomNum)
+        [HttpGet, Route("GetAllPosts")]
+        public Task<PostsList> GetAllPosts(int roomNum)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Assignment.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, $"GeAllPosts('{roomNum}')  failed");
+                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
                 throw;
             }
         }

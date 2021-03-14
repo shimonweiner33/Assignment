@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment.Data.Repository.Interface
+namespace Assignment.Services.Connections
 {
-    public interface IConnectionsRepository
+    public interface IConnectionsService
     {
-        Task<bool> UpdateConnectionId(string userName, string onnectionId);
+        Task<ExtendMember> UpdateConnectionId(string userName, string onnectionId);
         Task<bool> DeleteConnectionId(string userName, string connectionId);
         Task<ExtendMembers> GetAllLogInUsers();
         Task<ExtendMember> GetUserConnection(string userName);

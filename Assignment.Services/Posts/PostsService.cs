@@ -18,7 +18,7 @@ namespace Assignment.Services.Posts
 
         public async Task<PostsList> GetAllPosts(int roomNum)
         {
-            var posts = await postRepository.GeAllPosts(roomNum);
+            var posts = await postRepository.GetAllPosts(roomNum);
 
             return posts;
         }

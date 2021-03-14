@@ -12,7 +12,7 @@ export class Member{
     // password: string;
 }
 export class Register{
-    username: string;
+    userName: string;
     password: string;
     verificationPassword: string;
     firstName: string;
@@ -24,7 +24,7 @@ export interface ExtendMember
 {
     firstName: string;
     lastName: string;
-    username: string;
+    userName: string;
     phoneArea: string;
     phoneNumber: string;
     UserConnectinonId: string;

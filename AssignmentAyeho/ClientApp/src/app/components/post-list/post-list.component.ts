@@ -50,19 +50,7 @@ export class PostListComponent implements OnInit {
 
     this.initListFormGroup();
   }
-  // updatePostListAfterChangesByOther() {
-  //   this.hubsService._hubConnecton.on('updatePost', post => {
 
-  //     const index = this.postList.indexOf(post);
-  //     if (index > -1) {
-  //       this.postList[index] = post;
-  //     }
-  //     else {
-  //       this.postList.push(post);
-  //     }
-  //     console.log(post);
-  //   });
-  // }
   initListFormGroup() {
     this.postFormGroup = new FormGroup({
       author: new FormControl(''),

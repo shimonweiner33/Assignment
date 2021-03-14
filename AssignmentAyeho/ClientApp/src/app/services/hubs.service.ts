@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { BehaviorSubject } from 'rxjs';
-import { ConnectedUsers } from '../models/user.model';
+import { ConnectedUsers, ExtendMember } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class HubsService {
 
   GetUserList() {
     //this._userListResponse$.next(null)
-    this.http.get("https://localhost:44353/api/Account/GeAllLogInUsers").subscribe((res: ConnectedUsers) => {
+    this.http.get("https://localhost:44353/api/Account/GetAllLogInUsers").subscribe((res: ConnectedUsers) => {
       this._userListResponse$.next(res)
 
     }, err => {
@@ -34,21 +34,30 @@ export class HubsService {
 
 
   updateUserLogIn() {
-    this._hubConnecton.on('NewUserLogIn', newUserName => {
+    this._hubConnecton.on('NewUserLogIn', newUser => {
       const list = this._userListResponse$.getValue();
-      if (newUserName && !list || list.members.indexOf(newUserName) == -1) {
-        list.members.push(newUserName);
+      let index = -1;
+      if (newUser) {
+        if (list) {
+          index = list.members.map(function (x: ExtendMember) { return x.userName; }).indexOf(newUser.userName)
+        }
+        if (!list || index == -1) {
+          list.members.push(newUser);
+        }
+        if(index >-1){
+          list.members[index] = newUser;
+        }
         this._userListResponse$.next(list)
-        console.log(newUserName);
+        console.log(newUser);
       }
     });
   }
   updateUserLogOut() {
     this._hubConnecton.on('UserLogOut', logOutUserName => {
       const list = this._userListResponse$.getValue();
-      var index = list.members.indexOf(logOutUserName);
+      var index = list.members.map(function (x) { return x.userName; }).indexOf(logOutUserName)
       if (index > -1) {
-        list.members = list.members.filter(userName => userName !== logOutUserName);
+        list.members = list.members.filter(x => x.userName !== logOutUserName);
       }
       this._userListResponse$.next(list)
       console.log(logOutUserName);

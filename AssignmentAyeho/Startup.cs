@@ -1,5 +1,5 @@
 using Assignment.Data;
-using Assignment.Hubs;
+using Assignment.Services.Hubs;
 using Assignment.Services;
 using Assignment.Services.Constants;
 using Assignment.Services.Posts;

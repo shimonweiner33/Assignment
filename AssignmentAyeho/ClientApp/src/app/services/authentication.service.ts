@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Register, User } from '../models/user.model';
+import { HubsService } from './hubs.service';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   public isLogin = this.isCookieExist();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private hubsService: HubsService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -21,8 +22,11 @@ export class AuthenticationService {
     return this.http.post<any>(`https://localhost:44353/api/Account/Login`, { username, password },
       { observe: 'response', withCredentials: true })
       .subscribe((data: any) => {
-        if(data){
-          if(data.body.isUserAuth){
+        if (data) {
+          if (data.body.isUserAuth) {
+            //
+            this.hubsService._hubConnecton.invoke("UpdateConnectionId",username);
+            //
             this.isLogin = true;
           }
           this.currentUserSubject.next(data.body);
@@ -33,11 +37,13 @@ export class AuthenticationService {
   }
   register(registerDetails: Register) {
 
-    return this.http.post<any>(`https://localhost:44353/api/Account/Register`,  registerDetails,
+    return this.http.post<any>(`https://localhost:44353/api/Account/Register`, registerDetails,
       { observe: 'response', withCredentials: true })
       .subscribe((data: any) => {
-        if(data){
-          if(data.body && data.body.isUserAuth){
+        if (data) {
+          if (data.body && data.body.isUserAuth) {
+            this.hubsService._hubConnecton.invoke("UpdateConnectionId",registerDetails.userName);
+
             this.isLogin = true;
           }
           this.currentUserSubject.next(data.body);
@@ -49,8 +55,10 @@ export class AuthenticationService {
 
   logout() {
 
-    return this.http.post("https://localhost:44353/api/Account/Logout", null).subscribe((res: any) => {
-      if(this.currentUserValue && this.currentUserValue.isUserAuth){
+    return this.http.post("https://localhost:44353/api/Account/Logout", null).subscribe((removedUserName: any) => {
+      if (removedUserName) {
+        this.hubsService._hubConnecton.invoke("RemoveConnectionId",removedUserName.toString());
+
         this.isLogin = false;
       }
       this.currentUserSubject.next(null);

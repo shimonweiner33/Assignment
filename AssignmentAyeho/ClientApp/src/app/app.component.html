@@ -6,6 +6,33 @@
   </div>
   <div class="nav-main">
     <nav class="nav-options">
+
+      <app-post class="room"
+        *ngFor="let room of roomList">
+          <button class="nav-btn" routerLink="/post-list">חדר {{room.roomName}}</button>
+      </app-post>
+
+
+      <button class="nav-btn" (click)="openDialogAdd = !openDialogAdd">
+      {{openDialogAdd?'ביטול':'חדר פרטי'}}
+      </button>
+      <div class="add-room-dialog" *ngIf="openDialogAdd">
+        <form class="room-form-group" [formGroup]="roomFormGroup">
+
+          <label class="post-details-label">
+            add room name:
+            <input type="text" formControlName="roomName" class="form__field">
+          </label>
+          <label class="post-details-label">
+            add userName:
+            <input type="text" formControlName="users" class="form__field">
+          </label>
+        </form>
+        <button class="nav-btn"(click)="addRoom()">שמור</button>
+        <button class="nav-btn" routerLink="/post-list">חדר פרטי</button>
+      </div>
+
+
       <button class="nav-btn" routerLink="/post-list">חדר ראשי</button>
       <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/register">הרשמה</button>
       <button class="nav-btn" *ngIf="authenticationService.isLogin" (click)="logout()">התנתקות</button>
@@ -17,9 +44,9 @@
       user: {{user.userName}}
     </div> -->
     <div class="login-list">
-      <h6>משתמשים מחוברים</h6>
+      <h6>{{(logInUsersList.length > 0)?'משתמשים מחוברים':'אין משתמשים מחוברים'}}</h6>
       <ul>
-        <li *ngFor="let user of logInUsersList">{{user.firstName}}  {{user.lastName}}
+        <li *ngFor="let user of logInUsersList">{{user.firstName}} {{user.lastName}}
       </ul>
     </div>
     <div class="forum-body">

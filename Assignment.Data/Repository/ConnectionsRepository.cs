@@ -86,7 +86,7 @@ namespace Assignment.Data.Repository
                 throw ex;
             }
         }
-        public async Task<ExtendMembers> GeAllLogInUsers()
+        public async Task<ExtendMembers> GetAllLogInUsers()
         {
             try
             {
@@ -107,7 +107,7 @@ namespace Assignment.Data.Repository
             }
         }
 
-        public async Task<ExtendMember> GeUserConnection(string userName)
+        public async Task<ExtendMember> GetUserConnection(string userName)
         {
             try
             {
