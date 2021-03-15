@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Serilog;
 using Assignment.Services.Rooms;
 using Assignment.Data.Repository.Interface;
+using System.Text.Json;
 
 namespace Rooms.Controllers
 {
@@ -32,28 +33,46 @@ namespace Rooms.Controllers
             //_logger = (ILogger<RoomsController>)Log.ForContext<RoomsController>();
 
         }
-
+        [HttpGet, Route("GetAllRooms")]
+        public Task<RoomsList> GetAllRooms()
+        {
+            try
+            {
+                string userName = User.Identity.Name;
+                return _roomsService.GetAllRooms(userName);
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
+                throw;
+            }
+        }
         [Authorize]
         [HttpPost, Route("CreateOrUpdateRoom")]
         public async Task<int> CreateOrUpdateRoom(Room room)
         {
-            int InsertedId = 0;
+            int insertedId = 0;
             try
             {
-                room.UserNameOne = User.Identity.Name;
-                InsertedId = await _roomsService.CreateOrUpdateRoom(room);
-                room.RoomNum = InsertedId;
-                var userOne = await _connectionsRepository.GetUserConnection(room.UserNameOne);
-                var userTwo = await _connectionsRepository.GetUserConnection(room.UserNameTwo);
+                //add the current user to jsonList todo
+                Room insertedRoom = await _roomsService.CreateOrUpdateRoom(room);
 
-                await _messageHubContex.Clients.Users(userOne.UserConnectinonId, userTwo.UserConnectinonId).SendAsync("CreateOrUpdateRoom", room);
+                insertedId = insertedRoom.RoomNum;
+                room.RoomNum = insertedId;
+                foreach (var UserConnectinon in insertedRoom.UserConnectinons)
+                {
+                    _messageHubContex.Groups.AddToGroupAsync(UserConnectinon.UserConnectinonId, room.RoomName);
+                }
+                //await _messageHubContex.Clients.Users(usersRoom).SendAsync("CreateOrUpdateRoom", room);
+                await _messageHubContex.Clients.Group(room.RoomName).SendAsync("CreateOrUpdateRoom", room);
+
             }
             catch (Exception ex)
             {
                 //_logger.LogError(ex, $"CreateOrUpdateRoom('{room}')  failed");
                 throw;
             }
-            return InsertedId;
+            return insertedId;
         }
     }
 }

@@ -11,6 +11,17 @@ namespace Assignment.Services.Hubs
     //[HubName("GroupChatHub")]
     public class GroupHub : Hub
     {
+        public async Task JoinRoom(string roomName)
+        {
+            // await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+            //await Groups.Add(Context.ConnectionId, roomName);
+            //Clients.Group(roomName).addChatMessage(Context.User.Identity.Name + " joined.");
+        }
+
+        public async Task LeaveRoom(string roomName)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
+        }
         //private IConnectionsRepository _connectionsRepository;
         //public GroupHub(IConnectionsRepository connectionsRepository)
         //{

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { ConnectedUsers } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Post } from './../../models/posts-display.model';
@@ -21,11 +21,15 @@ export class PostListComponent implements OnInit {
   searchControl: FormControl = new FormControl('');
   postFormGroup: FormGroup;
   fileToUpload: File = null;
-  constructor(private postsService: PostsService, private route: ActivatedRoute, private hubsService: HubsService,private authenticationService: AuthenticationService) {
+  currentRoom: Number;
+  constructor(private postsService: PostsService, private route: ActivatedRoute, private hubsService: HubsService, private authenticationService: AuthenticationService) {
   }
   ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      this.currentRoom = parseInt(params['roomNum'])
+      this.postsService.GetPostList(this.currentRoom)
+    });
     this.postsService.postList$.subscribe((posts: any) => {
-
       this.postList = posts ? posts.posts : [];
       this.filteredPostList = this.postList;
     });
@@ -37,7 +41,7 @@ export class PostListComponent implements OnInit {
         this.filteredPostList = this.postList.filter(x => x.title.includes(val));
       }
     });
-    
+
 
     this.hubsService.userList$.subscribe((userList: any) => {
       this.userList = userList ? userList : [];
@@ -59,11 +63,11 @@ export class PostListComponent implements OnInit {
       image: new FormControl(''),
       title: new FormControl(''),
       isFavorite: new FormControl(false),
-      roomNum: new FormControl(1)
+      roomNum: new FormControl(this.currentRoom)
     });
   }
   updatePost(post: Post) {
-    post.roomNum = (post.roomNum === 0 )? 1 : post.roomNum;
+    post.roomNum = (post.roomNum === 0) ? 1 : post.roomNum;
     this.postsService.UpdatePost(post);
   }
 
@@ -71,6 +75,7 @@ export class PostListComponent implements OnInit {
     this.postsService.DeletePost(postId);
   }
   addPost() {
+    //this.postFormGroup.value.roomNum = this.currentRoom;
     this.postsService.AddPost(this.postFormGroup.value);
     this.openDialogAdd = false;
     this.postFormGroup.reset();

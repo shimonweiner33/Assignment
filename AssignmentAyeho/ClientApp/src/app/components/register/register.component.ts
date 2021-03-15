@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
     private router: Router) {
     //redirect to home if already logged in
     if (this.authenticationService.isLogin) {
-      this.router.navigate(['/post-list']);
+      this.router.navigate(['/post-list',1]);
     }
 
   }
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
       this.authenticationService.currentUser.subscribe(
         data => {
           if (this.authenticationService.isLogin) {
-            this.router.navigate(['/post-list']);
+            this.router.navigate(['/post-list',1]);
           }
         },
         error => {

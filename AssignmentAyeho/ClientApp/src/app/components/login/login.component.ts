@@ -20,9 +20,8 @@ export class LoginComponent implements OnInit {
     private router: Router) {
 
     if (this.authenticationService.isLogin) {
-      this.router.navigate(['/post-list']);
+      this.router.navigate(['/post-list',1]);
     }
-
   }
 
   ngOnInit() {
@@ -36,7 +35,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.currentUser.subscribe(
       data => {
         if (this.authenticationService.isLogin) {
-          this.router.navigate(['/post-list']);
+          this.router.navigate(['/post-list',1]);
         }
       },
       error => {

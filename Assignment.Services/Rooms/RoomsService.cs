@@ -2,7 +2,9 @@
 using Assignment.Data.Repository.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Assignment.Services.Rooms
@@ -15,10 +17,29 @@ namespace Assignment.Services.Rooms
             this.roomsRepository = roomsRepository;
         }
 
-        public async Task<int> CreateOrUpdateRoom(Room room)
+        public async Task<Room> CreateOrUpdateRoom(Room room)
         {
+            Room insertedRoom = null;
             var result = await roomsRepository.CreateOrUpdateRoom(room);
-            return result;
+
+            if (result != 0)
+            {
+                insertedRoom = await GetRoom(result);
+            }
+            return insertedRoom;
+        }
+        public async Task<RoomsList> GetAllRooms(string userName)
+        {
+            var rooms = await roomsRepository.GetAllRooms(userName);
+
+            return rooms;
+        }
+
+        public async Task<Room> GetRoom(int roomId)
+        {
+            Room room = await roomsRepository.GetRoom(roomId);
+            room.UserConnectinons = await roomsRepository.GetRoom_UserConnectinons(roomId);
+            return room;
         }
 
         public async Task<bool> DeleteRoom(int roomId)

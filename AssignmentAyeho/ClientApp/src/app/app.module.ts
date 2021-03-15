@@ -35,7 +35,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
       { path: '', redirectTo: 'app', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
-      { path: 'post-list', component: PostListComponent },
+      // { path: 'post-list:roomNum', component: PostListComponent },
+      {path:"post-list/:roomNum", component:PostListComponent},
     ]),
     AppRoutingModule
   ],

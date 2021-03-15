@@ -8,7 +8,8 @@ namespace Assignment.Services.Rooms
 {
     public interface IRoomsService
     {
-        Task<int> CreateOrUpdateRoom(Room post);
+        Task<Room> CreateOrUpdateRoom(Room post);
         Task<bool> DeleteRoom(int roomId);
+        Task<RoomsList> GetAllRooms(string userName);
     }
 }

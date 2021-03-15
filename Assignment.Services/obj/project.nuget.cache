@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MUs4L/61ULpnWjuzBn2Zo46la+15iBgtfCyb6CAGQw8IszTlFPzQSR8r/x68Yl2PStJEZBz/+EnGu7a+i8+T0Q==",
+  "dgSpecHash": "UJ0VwvOlMYozmFjeywsVBBU1ohoh3Q0E7GRijHq8m5WQxRuJRi4WNf6POeKwZKLJdCZMrBzMy1qYsKMxkm8l+g==",
   "success": true,
   "projectFilePath": "C:\\gihub\\Assignment\\Assignment.Services\\Assignment.Services.csproj",
   "expectedPackageFiles": [
@@ -54,7 +54,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.io.pipelines\\4.5.2\\system.io.pipelines.4.5.2.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.net.websockets.websocketprotocol\\4.5.1\\system.net.websockets.websocketprotocol.4.5.1.nupkg.sha512",
-    "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.numerics.vectors\\4.4.0\\system.numerics.vectors.4.4.0.nupkg.sha512",
+    "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.7.0\\system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512",
@@ -66,7 +66,8 @@
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
+    "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.text.encodings.web\\5.0.0\\system.text.encodings.web.5.0.0.nupkg.sha512",
+    "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.text.json\\5.0.1\\system.text.json.5.0.1.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.threading.channels\\4.5.0\\system.threading.channels.4.5.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"

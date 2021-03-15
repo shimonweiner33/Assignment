@@ -10,13 +10,23 @@ import { HubsService } from './hubs.service';
 export class RoomsService {
   private _roomListResponse$ = new BehaviorSubject<Rooms>(null);
   public roomList$ = this._roomListResponse$.asObservable();
-  constructor(private http: HttpClient, private hubsService: HubsService) { }
+  constructor(private http: HttpClient, private hubsService: HubsService) {
+    this.GetRoomList();
+   }
   AddRoom(room: Room) {
-    this.http.post("https://localhost:44353/Assignment/CreateOrUpdateRoom", room).subscribe((res: Boolean) => {
-      // const list = this._roomListResponse$.getValue();
-      // list.posts.push(post);
-      // this._roomListResponse$.next(list)
+    this.http.post("https://localhost:44353/Rooms/CreateOrUpdateRoom", room).subscribe((res: Boolean) => {
       console.log("add seccessfuly");
+    }, err => {
+
+    })
+  }
+
+  GetRoomList() {
+
+    this._roomListResponse$.next(null)
+    this.http.get("https://localhost:44353/Rooms/GetAllRooms").subscribe((res: Rooms) => {
+      this._roomListResponse$.next(res)
+
     }, err => {
 
     })
@@ -24,7 +34,7 @@ export class RoomsService {
 
   DeleteRoom(roomNum: number) {
 
-    this.http.post("https://localhost:44353/Assignment/DeleteRoom", roomNum).subscribe((res: Boolean) => {
+    this.http.post("https://localhost:44353/Rooms/DeleteRoom", roomNum).subscribe((res: Boolean) => {
 
     }, err => {
 

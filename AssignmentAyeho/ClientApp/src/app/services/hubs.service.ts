@@ -35,13 +35,13 @@ export class HubsService {
 
   updateUserLogIn() {
     this._hubConnecton.on('NewUserLogIn', newUser => {
-      const list = this._userListResponse$.getValue();
+      let list = this._userListResponse$.getValue();
       let index = -1;
       if (newUser) {
         if (list) {
           index = list.members.map(function (x: ExtendMember) { return x.userName; }).indexOf(newUser.userName)
         }
-        if (!list || index == -1) {
+        if (index == -1) {
           list.members.push(newUser);
         }
         if(index >-1){

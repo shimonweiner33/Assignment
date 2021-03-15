@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router, private hubsService: HubsService, private authenticationService: AuthenticationService, private roomsService: RoomsService) {
     if (this.authenticationService.isLogin) {
-      this.router.navigate(['/post-list']);
+      this.router.navigate(['/post-list',1]);
     }
   }
   ngOnInit(): void {
@@ -34,6 +34,12 @@ export class AppComponent implements OnInit {
     });
     this.initListFormGroup();
     this.roomsService.updateRoomListAfterChangesByOther();
+
+    this.roomsService.roomList$.subscribe((rooms: any) => {
+      this.roomList = rooms ? rooms.rooms : [];
+      this.roomFormGroup.reset();
+      this.initListFormGroup();
+    });
   }
   title = 'פורום';
 
@@ -41,17 +47,29 @@ export class AppComponent implements OnInit {
     this.authenticationService.logout()
     this.authenticationService.isLogin = false;
   }
-
+  addUserToRoom(user: any) {
+    if(this.openDialogAdd){
+      let users = this.roomFormGroup.value.users;
+      if (users && !users.some(x => x.userName === user.userName)) {
+        users.push(user)
+      }
+    }
+  }
   addRoom() {
     this.roomsService.AddRoom(this.roomFormGroup.value);
     this.openDialogAdd = false;
+  }
+  cancelRoom() {
     this.roomFormGroup.reset();
+    this.initListFormGroup();
+    this.openDialogAdd = !this.openDialogAdd
   }
   initListFormGroup() {
+
     this.roomFormGroup = new FormGroup({
-      users: new FormControl(''),
+      users: new FormControl([]),
       roomName: new FormControl(''),
-      roomNum: new FormControl(1)
+      roomNum: new FormControl(0)
     });
   }
 }
