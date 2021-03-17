@@ -36,6 +36,13 @@ namespace Assignment.Controllers
         //    return postsService.GetPostById(postId);
         //}
 
+
+        /// <summary>
+        /// Gets all posts from Posts table by room number.
+        /// user not must login
+        /// </summary>
+        /// /// <param name="roomNum">current room to get the post to</param>
+        /// <returns>Result - the model asked as PostsList.</returns>
         [HttpGet, Route("GetAllPosts")]
         public Task<PostsList> GetAllPosts(int roomNum)
         {
@@ -52,9 +59,24 @@ namespace Assignment.Controllers
         [HttpGet, Route("GetAllPostsByParams")]
         public Task<PostsList> GetAllPostsByParams(Post searchParams)
         {
-            return _postsService.GetAllPostsByParams(searchParams);
+
+            try
+            {
+                return _postsService.GetAllPostsByParams(searchParams);
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
+                throw;
+            }
         }
 
+        /// <summary>
+        /// Updates or create a specific Post.
+        /// user must login.
+        /// </summary>
+        /// <param name="post"></param>
+        /// <returns>A Inserted postId as int. if update the InsertedId > 0 .</returns>
         [Authorize]
         [HttpPost, Route("CreateOrUpdatePost")]
         public async Task<int> CreateOrUpdatePost(Post post)
@@ -79,14 +101,29 @@ namespace Assignment.Controllers
             return InsertedId;
         }
 
+        /// <summary>
+        /// DeleteRuleById method Delete AddSubtractStaffRule by id and his items.
+        /// user must login.
+        /// </summary>
+        /// <remarks> See project's JSON folder for example of JSON incoming and result.</remarks>
+        ///<returns>Returns <see cref="bool"/> : true if success.</returns>
         [Authorize]
         [HttpPost, Route("DeletePost")]
         public async Task<bool> DeletePost([FromBody] int postId)
         {
-            var result = await _postsService.DeletePost(postId);
-            if (result)
+            bool result = false;
+            try
             {
-                await _messageHubContex.Clients.All.SendAsync("DeletePost", postId);
+                result = await _postsService.DeletePost(postId);
+                if (result)
+                {
+                    await _messageHubContex.Clients.All.SendAsync("DeletePost", postId);
+                }
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
+                throw;
             }
             return result;
         }
