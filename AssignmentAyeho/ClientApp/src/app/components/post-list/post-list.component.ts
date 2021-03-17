@@ -38,7 +38,7 @@ export class PostListComponent implements OnInit {
       if (!val) {
         this.filteredPostList = this.postList;
       } else {
-        this.filteredPostList = this.postList.filter(x => x.title.includes(val));
+        this.filteredPostList = this.postList.filter(x => x.title.includes(val) || x.comment.includes(val) || x.userName.includes(val));
       }
     });
 
@@ -80,6 +80,4 @@ export class PostListComponent implements OnInit {
     this.openDialogAdd = false;
     this.postFormGroup.reset();
   }
-
-
 }

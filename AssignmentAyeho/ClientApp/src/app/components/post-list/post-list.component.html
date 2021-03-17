@@ -1,8 +1,10 @@
 <ng-container>
-    <input [formControl]="searchControl" type="text">
-    <label class="post-details-label">
-        חיפוש כותרת
-    </label>
+    <div class="searches">
+        <input [formControl]="searchControl" type="text"  class="form__field">
+        <label class="post-details-label">
+            חיפוש באתר
+        </label>
+    </div>
 
     <app-post [post]="post" class="post" (updatePostEvent)="updatePost($event)" (deletePostEvent)="deletePost($event)"
         *ngFor="let post of filteredPostList">
@@ -12,19 +14,19 @@
     <button (click)="openDialogAdd = !openDialogAdd">הוספה</button>
     <div *ngIf="openDialogAdd">
         <form [formGroup]="postFormGroup">
-
+            
             <label class="post-details-label">
                 author:
-                <input type="text" formControlName="author" class="form__field" >
+                <input type="text" formControlName="author" class="form__field">
             </label>
 
             <label class="post-details-label">
                 comment:
-                <input type="text" formControlName="comment" class="form__field" >
+                <input type="text" formControlName="comment" class="form__field">
             </label>
             <label class="post-details-label">
                 image:
-                <input type="text" formControlName="image" class="form__field" >
+                <input type="text" formControlName="image" class="form__field">
             </label>
             <label class="post-details-label">
                 title:

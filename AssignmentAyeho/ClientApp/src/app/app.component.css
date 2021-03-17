@@ -2,6 +2,9 @@ body{
   /* background-color: coral; */
   min-height: 881px;
 }
+.forum-page{
+  background-color: darkgoldenrod;
+}
 .top-row{
   background-color: yellowgreen;
 }
@@ -19,34 +22,22 @@ body{
 .nav-main{
   display: flex;
   justify-content: flex-end;
-  background-color: darkgoldenrod;
+  /* background-color: darkgoldenrod; */
 }
 
-.nav-btn {
-  padding: 1rem;
-  text-decoration: none;
-  display: inline-block;
-  background-color: #e8e8e8;
-  color: #3d3d3d;
-  border-radius: 4px;
-  margin:10px 30px 10px 0px;
-}
 
-.nav-btn:hover {
-  color: white;
-  background-color: #42545C;
-}
-.nav-btn.active {
-  background-color: black;
-}
 .forum-frame{
   display:flex;
 }
 .login-list{
-  width: 15%;
+  width: 10%;
+  /* background-color: darkgoldenrod; */
 }
 .forum-body{
   width: 85%;
+  background-color: #141414;
+  padding: 40px;
+  border-radius: 45px;
 }
 .add-room-dialog{
   display:flex;
@@ -58,3 +49,35 @@ body{
 .nav-options{
   display:flex;
 }
+:host ::ng-deep button {
+  font-family: Arial, sans-serif;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  margin-bottom: 30px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+:host ::ng-deep button:hover {
+  background-color: #cfd8dc;
+}
+
+
+.nav-btn {
+  padding: 1rem;
+  /* text-decoration: none;
+  display: inline-block;
+  background-color: #e8e8e8;
+  color: #3d3d3d;
+  border-radius: 4px; */
+  margin:10px 30px 10px 0px;
+}
+/* 
+.nav-btn:hover {
+  color: white;
+  background-color: #42545C;
+}
+.nav-btn.active {
+  background-color: black;
+} */
