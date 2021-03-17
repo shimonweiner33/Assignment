@@ -1,36 +1,37 @@
-<form [formGroup]="postFormGroup">
-  <div class="post">
+<div class="post-content">
+  <form [formGroup]="postFormGroup">
+    <div class="post">
 
-    <img class="img-responsive" src="//cdn.syncfusion.com/content/images/forum/user_logo.png">
-    <label>
-      user name: {{post.userName}}
-    </label>
-    <br />
-    <label>
-      author:
-      <input type="text" formControlName="author" class="form__field">
-    </label>
+      <img class="img-responsive" src="//cdn.syncfusion.com/content/images/forum/user_logo.png">
+      <label>
+        user name: {{post.userName}}
+      </label>
+      <br />
+      <label>
+        author:
+        <input type="text" formControlName="author" class="form__field">
+      </label>
 
-    <label>
-      image:
-      <input type="text" formControlName="image" class="form__field">
-    </label>
-    <label>
-      title:
-      <input type="text" formControlName="title" class="form__field">
-    </label>
-    <label>
-      isFavorite:
-      <input type="checkbox" formControlName="isFavorite" class="form__field">
-    </label>
-    <br />
-    <label>
-      comment:
-      <input type="text" formControlName="comment" class="form_comment_field">
-    </label>
-  </div>
-</form>
+      <label>
+        image:
+        <input type="text" formControlName="image" class="form__field">
+      </label>
+      <label>
+        title:
+        <input type="text" formControlName="title" class="form__field">
+      </label>
+      <label>
+        isFavorite:
+        <input type="checkbox" formControlName="isFavorite" class="form__field">
+      </label>
+      <br />
+      <label class="comment-label">
+        comment:
+        <input type="text" formControlName="comment" class="comment-input">
+      </label>
+    </div>
+  </form>
 
-
-<button (click)="update()">עדכון</button>
-<button (click)="delete()">מחיקה</button>
+  <button class="btn-update" (click)="update()">Update</button>
+  <button class="btn-delete" (click)="delete()">Delete</button>
+</div>

@@ -44,13 +44,21 @@ export class PostsService {
   DeletePost(postId: number) {
 
     this.http.post("https://localhost:44353/Assignment/DeletePost", postId).subscribe((res: Boolean) => {
-      const list = this._postListResponse$.getValue();
-      list.posts = list.posts.filter(x => x.id !== postId);
-      this._postListResponse$.next(list)
+      // const list = this._postListResponse$.getValue();
+      // list.posts = list.posts.filter(x => x.id !== postId);
+      // this._postListResponse$.next(list)
     }, err => {
 
     })
   }
+  deletePostFromListAfterChangesByOther() {
+    this.hubsService._hubConnecton.on('DeletePost', postId => {
+      const list = this._postListResponse$.getValue();
+      list.posts = list.posts.filter(x => x.id !== postId);
+      this._postListResponse$.next(list)
+    });
+  }
+
   updatePostListAfterChangesByOther() {
     this.hubsService._hubConnecton.on('CreateOrUpdatePost', post => {
       const list = this._postListResponse$.getValue();

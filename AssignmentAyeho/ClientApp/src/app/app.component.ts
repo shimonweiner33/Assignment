@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
     if (this.authenticationService.isLogin) {
       this.router.navigate(['/post-list',1]);
     }
+    else{
+      this.router.navigate(['/login']);
+    }
   }
   ngOnInit(): void {
     this.hubsService.userList$.subscribe((members: any) => {
@@ -41,7 +44,7 @@ export class AppComponent implements OnInit {
       this.initListFormGroup();
     });
   }
-  title = 'פורום';
+  title = 'Forum';
 
   logout() {
     this.authenticationService.logout()

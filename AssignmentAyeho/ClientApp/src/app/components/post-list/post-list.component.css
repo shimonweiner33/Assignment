@@ -21,3 +21,17 @@
   justify-content: flex-end;
   margin-bottom: 30px;
 }
+
+:host ::ng-deep button {
+  font-family: Arial, sans-serif;
+  /* background-color: #eee; */
+  border: none;
+  padding: 5px 10px;
+  /* margin-bottom: 30px; */
+  border-radius: 4px;
+  cursor: pointer;
+}
+:host ::ng-deep .btn-add{
+  background-color: #366c36;
+  margin-right: 3px;
+}

@@ -1,7 +1,7 @@
 <body>
   <div class="top-row">
     <div class="main-title-frame">
-      <h1 class="main-title-content">{{title}}</h1>
+      <div class="main-title-content large-title">{{title}}</div>
     </div>
   </div>
   <div class="forum-page">
@@ -9,46 +9,46 @@
       <nav class="nav-options">
 
         <button class="nav-btn" (click)="openDialogAdd = !openDialogAdd" *ngIf="!openDialogAdd">
-          חדר פרטי
+          Private room
         </button>
         <button class="nav-btn" (click)="cancelRoom()" *ngIf="openDialogAdd">
-          ביטול
+          Cancel
         </button>
         <div class="add-room-dialog" *ngIf="openDialogAdd">
           <form class="room-form-group" [formGroup]="roomFormGroup">
 
             <label class="post-details-label">
-              add room name:
+              Add room name:
               <input type="text" formControlName="roomName" class="form__field">
             </label>
             <label class="post-details-label">
-              בחר משתמש
+              Add users
               <div *ngFor="let addedUser of roomFormGroup.value.users">
                 {{addedUser.firstName}} {{addedUser.lastName}}
               </div>
             </label>
           </form>
-          <button class="nav-btn" (click)="addRoom()">שמור</button>
+          <button class="nav-btn" (click)="addRoom()">Save</button>
         </div>
 
         <button class="nav-btn" *ngFor="let room of roomList"
           [routerLink]="['/post-list', room.roomNum]">{{room.roomName}}</button>
-        <button class="nav-btn" [routerLink]="['/post-list', 1]">חדר ראשי</button>
-        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/register">הרשמה</button>
-        <button class="nav-btn" *ngIf="authenticationService.isLogin" (click)="logout()">התנתקות</button>
-        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/login">התחברות</button>
+        <button class="nav-btn" [routerLink]="['/post-list', 1]">Main room</button>
+        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/register">Register</button>
+        <button class="nav-btn" *ngIf="authenticationService.isLogin" (click)="logout()">Logout</button>
+        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/login">Login</button>
       </nav>
     </div>
     <div class="forum-frame">
       <div class="login-list">
-        <h6>{{(logInUsersList.length > 0)?'משתמשים מחוברים':'אין משתמשים מחוברים'}}</h6>
+        <h6>{{(logInUsersList.length > 0)?'Users online':'No users online'}}</h6>
         <ul>
           <li *ngFor="let user of logInUsersList">
             <div (click)="addUserToRoom(user)">{{user.firstName}} {{user.lastName}}</div>
         </ul>
       </div>
       <div class="forum-body">
-        <router-outlet></router-outlet>
+        <router-outlet class="forum-body-components"></router-outlet>
       </div>
 
     </div>

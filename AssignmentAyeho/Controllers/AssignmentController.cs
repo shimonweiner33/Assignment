@@ -84,6 +84,10 @@ namespace Assignment.Controllers
         public async Task<bool> DeletePost([FromBody] int postId)
         {
             var result = await _postsService.DeletePost(postId);
+            if (result)
+            {
+                await _messageHubContex.Clients.All.SendAsync("DeletePost", postId);
+            }
             return result;
         }
 

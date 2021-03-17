@@ -1,13 +1,4 @@
-.register-frame{
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-}
-.login-content{
-    width: 18%;
-}
-.login-frame{
-    display: flex;
-    width: 100%;
-}
+.btn-login{
+    background-color: #366c36;
+    margin-right: 3px;
+  }

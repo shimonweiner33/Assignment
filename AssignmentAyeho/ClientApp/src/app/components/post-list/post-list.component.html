@@ -2,7 +2,7 @@
     <div class="searches">
         <input [formControl]="searchControl" type="text"  class="form__field">
         <label class="post-details-label">
-            חיפוש באתר
+            Search
         </label>
     </div>
 
@@ -11,7 +11,7 @@
     </app-post>
 
 
-    <button (click)="openDialogAdd = !openDialogAdd">הוספה</button>
+    <button class="btn-add" (click)="openDialogAdd = !openDialogAdd">New post</button>
     <div *ngIf="openDialogAdd">
         <form [formGroup]="postFormGroup">
             
@@ -38,6 +38,6 @@
             </label>
 
         </form>
-        <button (click)="addPost()">שמור</button>
+        <button class="btn-add" (click)="addPost()">Save</button>
     </div>
 </ng-container>

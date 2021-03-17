@@ -46,8 +46,8 @@ export class PostListComponent implements OnInit {
     this.hubsService.userList$.subscribe((userList: any) => {
       this.userList = userList ? userList : [];
     });
-
     this.postsService.updatePostListAfterChangesByOther();
+    this.postsService.deletePostFromListAfterChangesByOther();
     //this.updatePostListAfterChangesByOther();
     this.hubsService.updateUserLogIn();
     this.hubsService.updateUserLogOut();

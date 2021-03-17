@@ -1,7 +1,3 @@
-.register-content{
-    width: 18%;
-}
-.register-frame{
-    display: flex;
-    justify-content: center;
-}
+.btn-register{
+    background-color: #1065a2;
+  }
