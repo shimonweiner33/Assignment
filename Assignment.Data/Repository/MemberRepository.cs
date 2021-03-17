@@ -36,10 +36,9 @@ namespace Assignment.Data.Repository
             }
             catch (Exception ex)
             {
-                //siteLogger.InsertAsync(LogLevel.Error, 0, $"NotificationTypeRepository-GetNotificationTypeByID, Exception: {ex.ToString()}");
+                //siteLogger.InsertAsync(LogLevel.Error, 0, $"Member-GetMember, Exception: {ex.ToString()}");
                 throw;
             }
-
         }
     }
 }

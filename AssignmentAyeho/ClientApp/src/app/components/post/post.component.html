@@ -1,28 +1,35 @@
 <form [formGroup]="postFormGroup">
-  
+  <div class="post">
+
+    <img class="img-responsive" src="//cdn.syncfusion.com/content/images/forum/user_logo.png">
     <label>
-        author:
+      user name: {{post.userName}}
+    </label>
+    <br />
+    <label>
+      author:
       <input type="text" formControlName="author" class="form__field">
     </label>
-  
+
     <label>
-        comment:
-      <input type="text" formControlName="comment" class="form__field">
-    </label>
-    <label>
-        image:
+      image:
       <input type="text" formControlName="image" class="form__field">
     </label>
     <label>
-        title:
+      title:
       <input type="text" formControlName="title" class="form__field">
     </label>
     <label>
-        isFavorite:
+      isFavorite:
       <input type="checkbox" formControlName="isFavorite" class="form__field">
     </label>
-  
-  </form>
+    <br />
+    <label>
+      comment:
+      <input type="text" formControlName="comment" class="form_comment_field">
+    </label>
+  </div>
+</form>
 
 
 <button (click)="update()">עדכון</button>

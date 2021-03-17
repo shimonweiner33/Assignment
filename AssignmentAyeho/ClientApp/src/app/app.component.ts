@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Room } from './models/rooms-display.model';
+import { ExtendMember } from './models/user.model';
 import { AuthenticationService } from './services/authentication.service';
+import { HubsService } from './services/hubs.service';
+import { RoomsService } from './services/rooms.service';
 
 @Component({
   selector: 'app-root',
@@ -10,30 +15,62 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent implements OnInit {
 
-  isLogin = false;
+  openDialogAdd = false;
+  roomFormGroup: FormGroup;
+  roomList: Room[] = [];
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
+  isLogin = false;
+  logInUsersList: ExtendMember[] = [];
+
+  constructor(private router: Router, private hubsService: HubsService, private authenticationService: AuthenticationService, private roomsService: RoomsService) {
+    if (this.authenticationService.isLogin) {
+      this.router.navigate(['/post-list',1]);
+    }
   }
   ngOnInit(): void {
+    this.hubsService.userList$.subscribe((members: any) => {
+      this.logInUsersList = members ? members.members : [];
+      console.log("logInUsersList: ", this.logInUsersList);
+    });
+    this.initListFormGroup();
+    this.roomsService.updateRoomListAfterChangesByOther();
 
-    this.authenticationService.currentUser.subscribe(
-      data => {
-        if (data && data.isUserAuth) {
-          this.isLogin = true
-        }
-        else {
-          this.isLogin = false
-        }
-      },
-      error => {
-        this.isLogin = false;
-      });
+    this.roomsService.roomList$.subscribe((rooms: any) => {
+      this.roomList = rooms ? rooms.rooms : [];
+      this.roomFormGroup.reset();
+      this.initListFormGroup();
+    });
   }
   title = 'פורום';
 
   logout() {
     this.authenticationService.logout()
     this.authenticationService.isLogin = false;
+  }
+  addUserToRoom(user: any) {
+    if(this.openDialogAdd){
+      let users = this.roomFormGroup.value.users;
+      if (users && !users.some(x => x.userName === user.userName)) {
+        users.push(user)
+      }
+    }
+  }
+  addRoom() {
+    this.roomsService.AddRoom(this.roomFormGroup.value);
+    this.openDialogAdd = false;
+  }
+  cancelRoom() {
+    this.roomFormGroup.reset();
+    this.initListFormGroup();
+    this.openDialogAdd = !this.openDialogAdd
+  }
+  initListFormGroup() {
+
+    this.roomFormGroup = new FormGroup({
+      users: new FormControl([]),
+      roomName: new FormControl(''),
+      roomNum: new FormControl(0)
+    });
   }
 }
 

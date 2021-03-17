@@ -1,0 +1,18 @@
+.form_comment_field {
+    font-family: inherit;
+    border: 0;
+    border-bottom: 2px solid grey;
+    outline: 0;
+    color: #cfd8dc;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+.post {
+    background: white;
+    border: 1px solid #ededed;
+    box-sizing: border-box;
+    /* margin-bottom: 30px; */
+    padding: 25px;
+}

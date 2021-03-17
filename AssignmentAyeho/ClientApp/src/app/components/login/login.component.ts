@@ -18,11 +18,10 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private router: Router) {
-    //redirect to home if already logged in
-    // if (this.authenticationService.currentUserValue?.isUserAuth) {
-    //   this.router.navigate(['/post-list']);
-    // }
 
+    if (this.authenticationService.isLogin) {
+      this.router.navigate(['/post-list',1]);
+    }
   }
 
   ngOnInit() {
@@ -35,16 +34,13 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.currentUser.subscribe(
       data => {
-        if (this.authenticationService.isCookieExist()) {
-           this.router.navigate(['/post-list']);
+        if (this.authenticationService.isLogin) {
+          this.router.navigate(['/post-list',1]);
         }
       },
       error => {
-        this.loading = false;
+        //this.loading = false;
       });
-      if (this.authenticationService.isLogin) {
-        this.router.navigate(['/post-list']);
-      }
   }
   get f() { return this.loginForm.controls; }
 
@@ -55,10 +51,6 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-
-    this.loading = true;
-
     this.authenticationService.login(this.f.username.value, this.f.password.value)
-    //this.router.navigate([this.returnUrl]);
   }
 }

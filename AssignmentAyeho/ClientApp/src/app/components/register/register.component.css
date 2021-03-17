@@ -1,0 +1,7 @@
+.register-content{
+    width: 18%;
+}
+.register-frame{
+    display: flex;
+    justify-content: center;
+}

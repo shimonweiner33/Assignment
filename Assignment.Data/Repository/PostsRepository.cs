@@ -41,16 +41,19 @@ namespace Assignment.Data.Repository
             }
 
         }
-        public async Task<PostsList> GeAllPosts()
+        public async Task<PostsList> GetAllPosts(int roomNum)
         {
             try
             {
                 using (IDbConnection conn = Connection)
                 {
-                    var sQuery = @"SELECT Id, Title, Author, Comment, Image, IsFavorite FROM Posts";
+                    var sQuery = @"SELECT Id, UserName, Title, Author, Comment, Image, IsFavorite FROM Posts WHERE RoomNum = @roomNum";
 
                     conn.Open();
-                    var result = (await conn.QueryAsync<Post>(sQuery)).ToList();
+                    var result = (await conn.QueryAsync<Post>(sQuery, new
+                    {
+                        roomNum = roomNum
+                    })).ToList();
                     return new PostsList() { Posts = result };
                 }
             }
@@ -67,7 +70,7 @@ namespace Assignment.Data.Repository
             {
                 using (IDbConnection conn = Connection)
                 {
-                    var sQuery = @"SELECT Id, Title, Author, Comment, Image, IsFavorite FROM Posts WHERE 1=1";
+                    var sQuery = @"SELECT Id, Title, Author, Comment, Image, IsFavorite, RoomNum FROM Posts WHERE 1=1";
                     sQuery = BulidQuery(searchParams, sQuery);
 
                     conn.Open();
@@ -78,6 +81,7 @@ namespace Assignment.Data.Repository
                         comment = searchParams.Comment,
                         image = searchParams.Image,
                         title = searchParams.Title,
+                        roomNum = searchParams.RoomNum
                     })).ToList();
                     return new PostsList() { Posts = result };
                 }
@@ -115,6 +119,9 @@ namespace Assignment.Data.Repository
             {
                 sQuery += " AND IsFavorite = @isFavorite";
             }
+
+            sQuery += " AND RoomNum = @roomNum";
+
             return sQuery;
         }
 
@@ -140,8 +147,8 @@ namespace Assignment.Data.Repository
                                     END
                                 ELSE
                                     BEGIN
-                                        INSERT INTO Posts(Title, Author, Comment, Image, IsFavorite, UpdatedOn, UpdatedBy, CreatedOn, CreatedBy)
-                                        VALUES(@title, @author, @comment, @image, @isFavorite, @now, @user, @now, @user);
+                                        INSERT INTO Posts(UserName, RoomNum, Title, Author, Comment, Image, IsFavorite, UpdatedOn, UpdatedBy, CreatedOn, CreatedBy)
+                                        VALUES(@userName, @roomNum, @title, @author, @comment, @image, @isFavorite, @now, @user, @now, @user);
                                         SELECT @InsertedId = SCOPE_IDENTITY()
                                     END
                                 SELECT @InsertedId;";
@@ -152,6 +159,8 @@ namespace Assignment.Data.Repository
                                     new
                                     {
                                         postId = post.Id,
+                                        userName = post.UserName,
+                                        roomNum = post.RoomNum,
                                         title = post.Title,
                                         author = post.Author,
                                         comment = post.Comment,

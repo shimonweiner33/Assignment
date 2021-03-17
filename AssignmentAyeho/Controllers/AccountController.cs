@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication;
 using Assignment.Services.Constants;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
+using Assignment.Data.Repository.Interface;
+using Assignment.Services.Connections;
 
 namespace Assignment.Controllers
 {
@@ -17,17 +19,20 @@ namespace Assignment.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IMemberService memberService;
-        private readonly IAcountService acountService;
-        private readonly IConfiguration configuration;
+        private readonly IMemberService _memberService;
+        private readonly IAcountService _acountService;
+        private readonly IConnectionsService _connectionsService;
+        private readonly IConfiguration _configuration;
         private const int UserCookieExpireTimeDays = 365;
 
 
-        public AccountController(IMemberService memberService, IAcountService acountService, IConfiguration configuration)
+        public AccountController(IMemberService memberService, IAcountService acountService, IConfiguration configuration,
+            IConnectionsService connectionsService)
         {
-            this.configuration = configuration;
-            this.memberService = memberService;
-            this.acountService = acountService;
+            this._configuration = configuration;
+            this._memberService = memberService;
+            this._acountService = acountService;
+            this._connectionsService = connectionsService;
         }
         [AllowAnonymous]
         [HttpPost, Route("Login")]
@@ -36,16 +41,15 @@ namespace Assignment.Controllers
             try
             {
                 var loginResult = new LoginResultModel();
-                var member = await memberService.GetMember(login);
-                //if (member == null)todo add
-                //{
-                //    loginResult.Error = "שם משתמש או סיסמא לא תקינים";
+                var member = await _memberService.GetMember(login);
+                if (member == null)
+                {
+                    loginResult.Error = "שם משתמש או סיסמא לא תקינים";
 
-                //    return Ok(loginResult);
-                //}
+                    return Ok(loginResult);
+                }
                 await SignInUser(login, member);
                 loginResult.Member = member;
-                loginResult.Member = new Member() { FirstName = "ddd", LastName = "ggg" };//todo remove
                 loginResult.IsUserAuth = true;
 
                 return Ok(loginResult);
@@ -59,23 +63,43 @@ namespace Assignment.Controllers
 
         [AllowAnonymous]
         [HttpPost, Route("Register")]
-        public async void Register(Login login)
+        public async Task<ActionResult> Register([FromBody] Register registerDetails)
         {
-            var member = await acountService.Register(login);
+            Login login = null;
+            bool isRegister = false;
+            try
+            {
+                isRegister = await _acountService.Register(registerDetails);
+                if (isRegister)
+                {
+                    login = new Login()
+                    {
+                        Password = registerDetails.VerificationPassword,
+                        UserName = registerDetails.UserName
+                    };
+                    return await this.Login(login);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Ok(false);
         }
 
 
         [HttpPost, Route("logout")]
         public async Task<ActionResult> Logout()
         {
+            string userName = User.Identity.Name;
             await HttpContext.SignOutAsync(AccountConst.AppCookie);
-            return Ok("user logout");
+            return Ok(userName);
         }
 
         private async Task SignInUser(Login loginModel, Member member)
         {
             int userCookieExpireTimeMinutes = 20;
-            int.TryParse(configuration["AccountSettings:UserCookieExpireTimeMinutes"], out userCookieExpireTimeMinutes);
+            int.TryParse(_configuration["AccountSettings:UserCookieExpireTimeMinutes"], out userCookieExpireTimeMinutes);
 
             var claims = new List<Claim>
             {
@@ -92,6 +116,11 @@ namespace Assignment.Controllers
             };
 
             await HttpContext.SignInAsync(AccountConst.AppCookie, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
+        }
+        [HttpGet, Route("GetAllLogInUsers")]
+        public Task<ExtendMembers> GetAllLogInUsers()
+        {
+            return _connectionsService.GetAllLogInUsers();
         }
     }
 }

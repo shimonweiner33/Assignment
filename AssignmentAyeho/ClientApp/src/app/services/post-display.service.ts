@@ -14,12 +14,12 @@ export class PostsService {
   public postList$ = this._postListResponse$.asObservable();
 
   constructor(private http: HttpClient, private hubsService: HubsService) {
-    this.GetPostList(null);
+    this.GetPostList(1);
   }
-  GetPostList(posts: Posts) {
+  GetPostList(roomNum: Number) {
 
     this._postListResponse$.next(null)
-    this.http.get("https://localhost:44353/Assignment/GeAllPosts").subscribe((res: Posts) => {
+    this.http.get("https://localhost:44353/Assignment/GetAllPosts?roomNum="+roomNum).subscribe((res: Posts) => {
       this._postListResponse$.next(res)
 
     }, err => {
@@ -29,9 +29,6 @@ export class PostsService {
 
   AddPost(post: Post) {
     this.http.post("https://localhost:44353/Assignment/CreateOrUpdatePost", post).subscribe((res: Boolean) => {
-      // const list = this._postListResponse$.getValue();
-      // list.posts.push(post);
-      // this._postListResponse$.next(list)
       console.log("add seccessfuly");
     }, err => {
 
@@ -39,12 +36,7 @@ export class PostsService {
   }
   UpdatePost(post: Post) {
     this.http.post("https://localhost:44353/Assignment/CreateOrUpdatePost", post).subscribe((res: Boolean) => {
-      // const list = this._postListResponse$.getValue();
-      // const index = list.posts.indexOf(post);
-      // if (index > -1) {
-      //   list.posts[index] = post;
-      //   this._postListResponse$.next(list)
-      // }
+      console.log("add seccessfuly");
     }, err => {
 
     })
@@ -59,10 +51,6 @@ export class PostsService {
 
     })
   }
-  // private getData<T>(url: string): Observable<T> {
-
-  //   return this.http.get<T>(url)
-  // }
   updatePostListAfterChangesByOther() {
     this.hubsService._hubConnecton.on('CreateOrUpdatePost', post => {
       const list = this._postListResponse$.getValue();
@@ -74,13 +62,6 @@ export class PostsService {
         list.posts.push(post);
       }
       this._postListResponse$.next(list)
-      // const index = this.postList.indexOf(post);
-      // if (index > -1) {
-      //   this.postList[index] = post;
-      // }
-      // else {
-      //   this.postList.push(post);
-      // }
       console.log(post);
     });
   }

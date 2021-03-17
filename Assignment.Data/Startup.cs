@@ -16,6 +16,9 @@ namespace Assignment.Data
         {
             services.AddSingleton<IMemberRepository, MemberRepository>();
             services.AddSingleton<IAcountRepository, AcountRepository>();
+            services.AddSingleton<IConnectionsRepository, ConnectionsRepository>();
+            services.AddSingleton<IRoomsRepository, RoomsRepository>();
+
             return services;
         }
     }

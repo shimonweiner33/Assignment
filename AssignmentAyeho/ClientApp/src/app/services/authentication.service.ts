@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../models/user.model';
+import { Register, User } from '../models/user.model';
+import { HubsService } from './hubs.service';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  public isLogin = false;
+  public isLogin = this.isCookieExist();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private hubsService: HubsService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -21,8 +22,28 @@ export class AuthenticationService {
     return this.http.post<any>(`https://localhost:44353/api/Account/Login`, { username, password },
       { observe: 'response', withCredentials: true })
       .subscribe((data: any) => {
-        if(data){
-          if(data.body.isUserAuth){
+        if (data) {
+          if (data.body.isUserAuth) {
+            //
+            this.hubsService._hubConnecton.invoke("UpdateConnectionId",username);
+            //
+            this.isLogin = true;
+          }
+          this.currentUserSubject.next(data.body);
+        }
+      }, err => {
+
+      })
+  }
+  register(registerDetails: Register) {
+
+    return this.http.post<any>(`https://localhost:44353/api/Account/Register`, registerDetails,
+      { observe: 'response', withCredentials: true })
+      .subscribe((data: any) => {
+        if (data) {
+          if (data.body && data.body.isUserAuth) {
+            this.hubsService._hubConnecton.invoke("UpdateConnectionId",registerDetails.userName);
+
             this.isLogin = true;
           }
           this.currentUserSubject.next(data.body);
@@ -34,28 +55,16 @@ export class AuthenticationService {
 
   logout() {
 
-    return this.http.post("https://localhost:44353/api/Account/Logout", null).subscribe((res: any) => {
-      if(this.currentUserValue && this.currentUserValue.isUserAuth){
+    return this.http.post("https://localhost:44353/api/Account/Logout", null).subscribe((removedUserName: any) => {
+      if (removedUserName) {
+        this.hubsService._hubConnecton.invoke("RemoveConnectionId",removedUserName.toString());
+
         this.isLogin = false;
       }
-      this.currentUserSubject.next(null);  
-    
-    // const list = this._postListResponse$.getValue();
-    //   list.posts = list.posts.filter(x => x.id !== postId);
-    //   this._postListResponse$.next(list)
+      this.currentUserSubject.next(null);
     }, err => {
 
     })
-
-    // return this.http.post<any>(`https://localhost:44353/api/Account/Logout`, null, { observe: 'response', withCredentials: true })
-    //   .subscribe((data: any) => {
-    //     if(this.currentUserValue && this.currentUserValue.isUserAuth){
-    //       this.isLogin = false;
-    //     }
-    //     this.currentUserSubject.next(null);
-    //   }, err => {
-
-    //   });
   }
 
 
@@ -64,7 +73,7 @@ export class AuthenticationService {
   isCookieExist() {
     var myCookie = this.getCookie("AppCookie");
 
-    if (myCookie == null) {
+    if (myCookie === null) {
       return false
     }
     else {
@@ -75,14 +84,14 @@ export class AuthenticationService {
     var dc = document.cookie;
     var prefix = name + "=";
     var begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
+    if (begin === -1) {
       begin = dc.indexOf(prefix);
       if (begin != 0) return null;
     }
     else {
       begin += 2;
       var end = document.cookie.indexOf(";", begin);
-      if (end == -1) {
+      if (end === -1) {
         end = dc.length;
       }
     }

@@ -10,7 +10,7 @@ namespace Assignment.Data.Repository.Interface
     {
         Task<bool> IsValidUser(Login login);
         Task<bool> IsValidUserAsync(Login loginModel);
-        Task<bool> Register(Login loginModel);
+        Task<bool> Register(Register registerDetails);
 
 
     }

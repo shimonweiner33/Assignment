@@ -9,9 +9,9 @@ C:\Users\Shimon.Weiner.GSTEPS\Source\repos\Assignment\Assignment.Data\obj\Debug\
 C:\gihub\Assignment\Assignment.Data\bin\Debug\netstandard2.0\Assignment.Data.deps.json
 C:\gihub\Assignment\Assignment.Data\bin\Debug\netstandard2.0\Assignment.Data.dll
 C:\gihub\Assignment\Assignment.Data\bin\Debug\netstandard2.0\Assignment.Data.pdb
-C:\gihub\Assignment\Assignment.Data\obj\Debug\netstandard2.0\Assignment.Data.csprojAssemblyReference.cache
 C:\gihub\Assignment\Assignment.Data\obj\Debug\netstandard2.0\Assignment.Data.AssemblyInfoInputs.cache
 C:\gihub\Assignment\Assignment.Data\obj\Debug\netstandard2.0\Assignment.Data.AssemblyInfo.cs
 C:\gihub\Assignment\Assignment.Data\obj\Debug\netstandard2.0\Assignment.Data.csproj.CoreCompileInputs.cache
 C:\gihub\Assignment\Assignment.Data\obj\Debug\netstandard2.0\Assignment.Data.dll
 C:\gihub\Assignment\Assignment.Data\obj\Debug\netstandard2.0\Assignment.Data.pdb
+C:\gihub\Assignment\Assignment.Data\obj\Debug\netstandard2.0\Assignment.Data.csprojAssemblyReference.cache

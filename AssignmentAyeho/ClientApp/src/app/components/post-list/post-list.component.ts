@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { ConnectedUsers } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Post } from './../../models/posts-display.model';
 import { HubsService } from './../../services/hubs.service';
@@ -14,16 +15,21 @@ import { PostsService } from './../../services/post-display.service';
 export class PostListComponent implements OnInit {
 
   postList: Post[] = [];
+  userList: ConnectedUsers[] = [];
   openDialogAdd = false;
   filteredPostList: any = [];
   searchControl: FormControl = new FormControl('');
   postFormGroup: FormGroup;
   fileToUpload: File = null;
-  constructor(private postsService: PostsService, private route: ActivatedRoute, private hubsService: HubsService,private authenticationService: AuthenticationService) {
+  currentRoom: Number;
+  constructor(private postsService: PostsService, private route: ActivatedRoute, private hubsService: HubsService, private authenticationService: AuthenticationService) {
   }
   ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      this.currentRoom = parseInt(params['roomNum'])
+      this.postsService.GetPostList(this.currentRoom)
+    });
     this.postsService.postList$.subscribe((posts: any) => {
-
       this.postList = posts ? posts.posts : [];
       this.filteredPostList = this.postList;
     });
@@ -32,27 +38,23 @@ export class PostListComponent implements OnInit {
       if (!val) {
         this.filteredPostList = this.postList;
       } else {
-        this.filteredPostList = this.postList.filter(x => x.title.includes(val));
+        this.filteredPostList = this.postList.filter(x => x.title.includes(val) || x.comment.includes(val) || x.userName.includes(val));
       }
     });
+
+
+    this.hubsService.userList$.subscribe((userList: any) => {
+      this.userList = userList ? userList : [];
+    });
+
     this.postsService.updatePostListAfterChangesByOther();
     //this.updatePostListAfterChangesByOther();
+    this.hubsService.updateUserLogIn();
+    this.hubsService.updateUserLogOut();
 
     this.initListFormGroup();
   }
-  // updatePostListAfterChangesByOther() {
-  //   this.hubsService._hubConnecton.on('updatePost', post => {
 
-  //     const index = this.postList.indexOf(post);
-  //     if (index > -1) {
-  //       this.postList[index] = post;
-  //     }
-  //     else {
-  //       this.postList.push(post);
-  //     }
-  //     console.log(post);
-  //   });
-  // }
   initListFormGroup() {
     this.postFormGroup = new FormGroup({
       author: new FormControl(''),
@@ -61,9 +63,11 @@ export class PostListComponent implements OnInit {
       image: new FormControl(''),
       title: new FormControl(''),
       isFavorite: new FormControl(false),
+      roomNum: new FormControl(this.currentRoom)
     });
   }
   updatePost(post: Post) {
+    post.roomNum = (post.roomNum === 0) ? 1 : post.roomNum;
     this.postsService.UpdatePost(post);
   }
 
@@ -71,10 +75,9 @@ export class PostListComponent implements OnInit {
     this.postsService.DeletePost(postId);
   }
   addPost() {
+    //this.postFormGroup.value.roomNum = this.currentRoom;
     this.postsService.AddPost(this.postFormGroup.value);
     this.openDialogAdd = false;
     this.postFormGroup.reset();
   }
-
-
 }

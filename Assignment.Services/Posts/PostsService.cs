@@ -16,9 +16,9 @@ namespace Assignment.Services.Posts
         }
 
 
-        public async Task<PostsList> GetAllPosts()
+        public async Task<PostsList> GetAllPosts(int roomNum)
         {
-            var posts = await postRepository.GeAllPosts();
+            var posts = await postRepository.GetAllPosts(roomNum);
 
             return posts;
         }
@@ -46,6 +46,5 @@ namespace Assignment.Services.Posts
             bool result = await postRepository.DeletePost(postId);
             return result;
         }
-
     }
 }

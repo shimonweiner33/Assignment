@@ -1,5 +1,5 @@
 using Assignment.Data;
-using Assignment.Hubs;
+using Assignment.Services.Hubs;
 using Assignment.Services;
 using Assignment.Services.Constants;
 using Assignment.Services.Posts;
@@ -58,7 +58,7 @@ namespace Assignment
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.AddTransient<IPostsService, PostsService>();
+
             services.AddControllers();
             services.AddRepositories();
             services.AddCommonServices();
@@ -78,21 +78,6 @@ namespace Assignment
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-
-            app.UseSignalR(routes =>
-            {
-                try
-                {
-                    // for net core 2.0 / net standard 2.0
-                    routes.MapHub<MessageHub>("message");
-                }
-                catch (System.Exception e)
-                {
-                    // for net 461
-                    routes.MapHub<MessageHub>("/message");
-                }
-            });
 
             if (env.IsDevelopment())
             {
@@ -115,6 +100,19 @@ namespace Assignment
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSignalR(routes =>
+            {
+                try
+                {
+                    // for net core 2.0 / net standard 2.0
+                    routes.MapHub<MessageHub>("message");
+                }
+                catch (System.Exception e)
+                {
+                    // for net 461
+                    routes.MapHub<MessageHub>("/message");
+                }
+            });
             app.UseCors("CorsPolicy");
             //app.UseMvc();
             app.UseEndpoints(endpoints =>

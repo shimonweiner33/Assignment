@@ -16,11 +16,11 @@ namespace Assignment.Services
             this.acountRepository = acountRepository;
         }
 
-        public async Task<bool> Register(Login login)
+        public async Task<bool> Register(Register registerDetails)
         {
             //isValid
-            login.Password = login.Password.ToHashHMACSHA1();
-            return await acountRepository.Register(login);
+            registerDetails.Password = registerDetails.Password.ToHashHMACSHA1();
+            return await acountRepository.Register(registerDetails);
         }
 
         public async Task<bool> IsValidUser(Login login)

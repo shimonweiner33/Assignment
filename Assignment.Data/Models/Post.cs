@@ -7,6 +7,8 @@ namespace Assignment.Data.Models
     public class Post : ModelBase
     {
         public int? Id { get; set; }
+        public string UserName { get; set; }
+        public int RoomNum { get; set; }
         public string Title  { get; set; }
         public string Author { get; set; }
         public string Comment { get; set; }

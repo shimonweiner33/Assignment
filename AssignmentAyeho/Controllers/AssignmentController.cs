@@ -1,5 +1,5 @@
 ﻿using Assignment.Data.Models;
-using Assignment.Hubs;
+using Assignment.Services.Hubs;
 using Assignment.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Assignment.Controllers
 {
@@ -18,12 +19,15 @@ namespace Assignment.Controllers
     {
         private IPostsService _postsService;
         //private readonly ILogger<AssignmentController> _logger;
+
         private readonly IHubContext<MessageHub> _messageHubContex;
 
         public AssignmentController(IPostsService postsService, IHubContext<MessageHub> messageHubContex)
         {
             this._postsService = postsService;
             this._messageHubContex = messageHubContex;
+            //_logger = (ILogger<AssignmentController>)Log.ForContext<AssignmentController>();
+
         }
 
         //[HttpGet, Route("GetPostById")]
@@ -32,10 +36,18 @@ namespace Assignment.Controllers
         //    return postsService.GetPostById(postId);
         //}
 
-        [HttpGet, Route("GeAllPosts")]
-        public Task<PostsList> GeAllPosts()
+        [HttpGet, Route("GetAllPosts")]
+        public Task<PostsList> GetAllPosts(int roomNum)
         {
-            return _postsService.GetAllPosts();
+            try
+            {
+                return _postsService.GetAllPosts(roomNum);
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
+                throw;
+            }
         }
         [HttpGet, Route("GetAllPostsByParams")]
         public Task<PostsList> GetAllPostsByParams(Post searchParams)
@@ -47,11 +59,23 @@ namespace Assignment.Controllers
         [HttpPost, Route("CreateOrUpdatePost")]
         public async Task<int> CreateOrUpdatePost(Post post)
         {
-            int InsertedId =  await _postsService.CreateOrUpdatePost(post);
-            post.Id = InsertedId;
-            //broadcast the message to the clients
-            await _messageHubContex.Clients.All.SendAsync("CreateOrUpdatePost", post);
-            //await _messageHubContex.Clients.User("123").SendAsync("UpdatePost", post);
+            int InsertedId = 0;
+            try
+            {
+                post.UserName = User.Identity.Name;
+                InsertedId = await _postsService.CreateOrUpdatePost(post);
+                post.Id = InsertedId;
+                //broadcast the message to the clients
+                //var userId = System.Security.Claims.ClaimTypes.NameIdentifier;
+                //await _messageHubContex.Clients.User(userId).SendAsync("CreateOrUpdatePost", post);
+                await _messageHubContex.Clients.All.SendAsync("CreateOrUpdatePost", post);
+                //await _messageHubContex.Clients.User("123").SendAsync("UpdatePost", post);
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, $"CreateOrUpdatePost('{post}')  failed");
+                throw;
+            }
             return InsertedId;
         }
 
