@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { ConnectedUsers } from '../../models/user.model';
+import { ConnectedUsers, ExtendMember } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Post } from './../../models/posts-display.model';
 import { HubsService } from './../../services/hubs.service';
@@ -21,7 +21,8 @@ export class PostListComponent implements OnInit {
   searchControl: FormControl = new FormControl('');
   postFormGroup: FormGroup;
   fileToUpload: File = null;
-  currentRoom: Number;
+  currentRoom: number;
+  currentLoginMember: ExtendMember;
   constructor(private postsService: PostsService, private route: ActivatedRoute, private hubsService: HubsService, private authenticationService: AuthenticationService) {
   }
   ngOnInit() {
@@ -46,13 +47,22 @@ export class PostListComponent implements OnInit {
     this.hubsService.userList$.subscribe((userList: any) => {
       this.userList = userList ? userList : [];
     });
-
     this.postsService.updatePostListAfterChangesByOther();
+    this.postsService.deletePostFromListAfterChangesByOther();
     //this.updatePostListAfterChangesByOther();
     this.hubsService.updateUserLogIn();
     this.hubsService.updateUserLogOut();
 
     this.initListFormGroup();
+    this.authenticationService.currentUser$.subscribe(
+      res => {
+        if (this.authenticationService.isLogin && res && res.isUserAuth) {
+          this.currentLoginMember = this.authenticationService.currentUserValue.member;
+        }
+      },
+      error => {
+        //this.loading = false;
+      });
   }
 
   initListFormGroup() {
@@ -67,7 +77,7 @@ export class PostListComponent implements OnInit {
     });
   }
   updatePost(post: Post) {
-    post.roomNum = (post.roomNum === 0) ? 1 : post.roomNum;
+    post.roomNum = this.currentRoom;
     this.postsService.UpdatePost(post);
   }
 
@@ -75,7 +85,8 @@ export class PostListComponent implements OnInit {
     this.postsService.DeletePost(postId);
   }
   addPost() {
-    //this.postFormGroup.value.roomNum = this.currentRoom;
+    this.postFormGroup.value.roomNum = this.currentRoom
+    this.postFormGroup.value.isFavorite = (this.postFormGroup.value.isFavorite)?this.postFormGroup.value.isFavorite: false
     this.postsService.AddPost(this.postFormGroup.value);
     this.openDialogAdd = false;
     this.postFormGroup.reset();

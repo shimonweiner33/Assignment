@@ -5,31 +5,38 @@ import { Register, User } from '../models/user.model';
 import { HubsService } from './hubs.service';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private _currentUserSubject$: BehaviorSubject<User>;
+  public currentUser$: Observable<User>;
   public isLogin = this.isCookieExist();
 
+  
+
   constructor(private http: HttpClient, private hubsService: HubsService) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
+    this._currentUserSubject$ = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser$ = this._currentUserSubject$.asObservable();
   }
 
   public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+    return this._currentUserSubject$.value;
   }
-
+  updateCurrentUser() {
+    this.http.get('https://localhost:44353/api/Account/GetCurrentUser').subscribe((res: any) => {
+      this._currentUserSubject$.next(res);
+    });
+  }
   login(username: string, password: string) {
     return this.http.post<any>(`https://localhost:44353/api/Account/Login`, { username, password },
       { observe: 'response', withCredentials: true })
       .subscribe((data: any) => {
         if (data) {
-          if (data.body.isUserAuth) {
+          if (data.body && data.body.isUserAuth) {
             //
+            this.hubsService.GetUserList();
             this.hubsService._hubConnecton.invoke("UpdateConnectionId",username);
             //
             this.isLogin = true;
           }
-          this.currentUserSubject.next(data.body);
+          this._currentUserSubject$.next(data.body);
         }
       }, err => {
 
@@ -42,11 +49,12 @@ export class AuthenticationService {
       .subscribe((data: any) => {
         if (data) {
           if (data.body && data.body.isUserAuth) {
+            this.hubsService.GetUserList();
             this.hubsService._hubConnecton.invoke("UpdateConnectionId",registerDetails.userName);
 
             this.isLogin = true;
           }
-          this.currentUserSubject.next(data.body);
+          this._currentUserSubject$.next(data.body);
         }
       }, err => {
 
@@ -61,7 +69,7 @@ export class AuthenticationService {
 
         this.isLogin = false;
       }
-      this.currentUserSubject.next(null);
+      this._currentUserSubject$.next(null);
     }, err => {
 
     })

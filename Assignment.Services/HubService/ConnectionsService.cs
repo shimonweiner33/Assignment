@@ -12,10 +12,13 @@ namespace Assignment.Services.Connections
     public class ConnectionsService : IConnectionsService
     {
         private IConnectionsRepository _connectionsRepository;
+        private IRoomsRepository _roomsRepository;
 
-        public ConnectionsService(IConnectionsRepository connectionsRepository)
+
+        public ConnectionsService(IConnectionsRepository connectionsRepository, IRoomsRepository roomsRepository)
         {
             this._connectionsRepository = connectionsRepository;
+            this._roomsRepository = roomsRepository;
         }
 
         public async Task<bool> DeleteConnectionId(string userName, string connectionId)
@@ -36,11 +39,13 @@ namespace Assignment.Services.Connections
             return user;
         }
 
-        public async Task<ExtendMember> UpdateConnectionId(string userName, string onnectionId)
+        public async Task<ExtendMember> UpdateConnectionId(string userName, string connectionId)
         {
             ExtendMember newUser = null;
-            bool isUpdated = await _connectionsRepository.UpdateConnectionId(userName, onnectionId);
-            if (isUpdated)
+            bool isUpdated = await _connectionsRepository.UpdateConnectionId(userName, connectionId);
+            bool isRoomsUpdated = await _roomsRepository.UpdateConnectionGroupId(userName, connectionId);
+
+            if (isUpdated && isRoomsUpdated)
             {
                 newUser = await GetUserConnection(userName);
             }

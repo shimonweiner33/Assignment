@@ -11,5 +11,7 @@ namespace Assignment.Services.Rooms
         Task<Room> CreateOrUpdateRoom(Room post);
         Task<bool> DeleteRoom(int roomId);
         Task<RoomsList> GetAllRooms(string userName);
+        Task<Room> GetRoom(int roomId);
+
     }
 }

@@ -54,6 +54,8 @@ namespace Rooms.Controllers
             int insertedId = 0;
             try
             {
+                room.UserName = User.Identity.Name;
+
                 //add the current user to jsonList todo
                 Room insertedRoom = await _roomsService.CreateOrUpdateRoom(room);
 
@@ -61,7 +63,7 @@ namespace Rooms.Controllers
                 room.RoomNum = insertedId;
                 foreach (var UserConnectinon in insertedRoom.UserConnectinons)
                 {
-                    _messageHubContex.Groups.AddToGroupAsync(UserConnectinon.UserConnectinonId, room.RoomName);
+                    await _messageHubContex.Groups.AddToGroupAsync(UserConnectinon.UserConnectinonId, room.RoomName);
                 }
                 //await _messageHubContex.Clients.Users(usersRoom).SendAsync("CreateOrUpdateRoom", room);
                 await _messageHubContex.Clients.Group(room.RoomName).SendAsync("CreateOrUpdateRoom", room);

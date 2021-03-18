@@ -26,9 +26,7 @@ namespace Assignment.Data.Repository
                 {
                     var sQuery = @"
                         SELECT * FROM Rooms AS r INNER JOIN Rooms_UserConnectinons AS ru ON r.RoomNum = ru.RoomNum 
-                        INNER JOIN Connections con ON con.UserConnectinonId = ru.UserConnectinonId
-                        WHERE con.UserName = @userName";
-
+                        WHERE ru.UserName = @userName";
                     conn.Open();
                     var result = (await conn.QueryAsync<Room>(sQuery, new
                     {
@@ -61,8 +59,8 @@ namespace Assignment.Data.Repository
                                     END
                                 ELSE
                                     BEGIN
-                                        INSERT INTO Rooms(RoomName, UpdatedOn, UpdatedBy, CreatedOn, CreatedBy)
-                                        VALUES(@roomName, @now, @user, @now, @user);
+                                        INSERT INTO Rooms(ManagerUserName, RoomName, UpdatedOn, UpdatedBy, CreatedOn, CreatedBy)
+                                        VALUES(@userName, @roomName, @now, @user, @now, @user);
                                         SELECT @InsertedId = SCOPE_IDENTITY()
                                     END
                                 SELECT @InsertedId;";
@@ -72,6 +70,7 @@ namespace Assignment.Data.Repository
                     var affectedRowId = await conn.ExecuteScalarAsync(sQuery,
                                     new
                                     {
+                                        userName = room.UserName,
                                         roomNum = room.RoomNum,
                                         roomName = room.RoomName,
                                         now = DateTime.Now,
@@ -85,12 +84,13 @@ namespace Assignment.Data.Repository
                         string processQuery = @"IF NOT EXISTS (SELECT * FROM Rooms_UserConnectinons 
                                                 WHERE UserConnectinonId = @userConnectinonId AND RoomNum = @roomNum)
                                                 BEGIN
-                                                   INSERT INTO Rooms_UserConnectinons VALUES (@userConnectinonId, @roomNum)
+                                                   INSERT INTO Rooms_UserConnectinons VALUES (@userConnectinonId, @roomNum, @userName)
                                                 END";
                         conn.Execute(processQuery, new
                         {
                             roomNum = insertedId,
-                            userConnectinonId = item.UserConnectinonId
+                            userConnectinonId = item.UserConnectinonId,
+                            userName = item.UserName
                         });
                     }
 
@@ -102,6 +102,39 @@ namespace Assignment.Data.Repository
                 throw ex;
             }
         }
+
+        public async Task<bool> UpdateConnectionGroupId(string userName, string connectionId)
+        {
+            var isUpdated = false;
+            try
+            {
+                using (IDbConnection conn = Connection)
+                {
+                    var sQuery = $@"UPDATE Rooms_UserConnectinons
+                                           SET UserConnectinonId = @userConnectinonId
+                                           WHERE UserName = @userName";
+
+                    conn.Open();
+                    var result = await conn.ExecuteAsync(sQuery,
+                        new
+                        {
+                            userName = userName,
+                            userConnectinonId = connectionId
+                        });
+
+                    isUpdated = true;
+
+                    return isUpdated;
+                }
+            }
+            catch (Exception ex)
+            {
+                //siteLogger.InsertAsync(LogLevel.Error, 0, $"ConnectionsRepository-UpdateConnectionId, Exception: {ex.ToString()}");
+                throw;
+            }
+        }
+
+
         public async Task<Room> GetRoom(int roomNum)
         {
             try

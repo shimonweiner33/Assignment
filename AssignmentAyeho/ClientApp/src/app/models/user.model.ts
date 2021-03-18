@@ -1,5 +1,6 @@
 export class User {
-    member: Member;
+    //member: Member;
+    member: ExtendMember;
     error: string;
     isUserAuth: boolean;
     //token: string;

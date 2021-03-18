@@ -1,4 +1,4 @@
-.form_comment_field {
+.comment-input {
     font-family: inherit;
     border: 0;
     border-bottom: 2px solid grey;
@@ -7,12 +7,28 @@
     padding: 7px 0;
     background: transparent;
     transition: border-color 0.2s;
+    width: 90%;
 }
-
+.comment-label{
+    width: 100%;
+}
 .post {
     background: white;
     border: 1px solid #ededed;
     box-sizing: border-box;
     /* margin-bottom: 30px; */
     padding: 25px;
+}
+
+.btn-delete {
+    background-color: #be2d2d;
+    margin-right: 3px;
+}
+
+.btn-update {
+    background-color: #1065a2;
+    margin-right: 3px;
+}
+.post-content{
+    margin-bottom: 30px;
 }

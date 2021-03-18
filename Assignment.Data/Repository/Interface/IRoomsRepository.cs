@@ -13,5 +13,6 @@ namespace Assignment.Data.Repository.Interface
         Task<RoomsList> GetAllRooms(string userName);
         Task<bool> DeleteRoom(int roomNum);
         Task<List<Rooms_UserConnectinons>> GetRoom_UserConnectinons(int roomNum);
+        Task<bool> UpdateConnectionGroupId(string userName, string connectionId);
     }
 }

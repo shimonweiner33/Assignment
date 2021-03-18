@@ -10,7 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
-
+using Assignment.Services.Rooms;
+using Assignment.Common.Enums;
 namespace Assignment.Controllers
 {
     [ApiController]
@@ -19,13 +20,16 @@ namespace Assignment.Controllers
     {
         private IPostsService _postsService;
         //private readonly ILogger<AssignmentController> _logger;
+        private IRoomsService _roomsService;
 
         private readonly IHubContext<MessageHub> _messageHubContex;
 
-        public AssignmentController(IPostsService postsService, IHubContext<MessageHub> messageHubContex)
+        public AssignmentController(IPostsService postsService, IHubContext<MessageHub> messageHubContex, IRoomsService roomsService)
         {
             this._postsService = postsService;
             this._messageHubContex = messageHubContex;
+            this._roomsService = roomsService;
+
             //_logger = (ILogger<AssignmentController>)Log.ForContext<AssignmentController>();
 
         }
@@ -36,6 +40,13 @@ namespace Assignment.Controllers
         //    return postsService.GetPostById(postId);
         //}
 
+
+        /// <summary>
+        /// Gets all posts from Posts table by room number.
+        /// user not must login
+        /// </summary>
+        /// /// <param name="roomNum">current room to get the post to</param>
+        /// <returns>Result - the model asked as PostsList.</returns>
         [HttpGet, Route("GetAllPosts")]
         public Task<PostsList> GetAllPosts(int roomNum)
         {
@@ -52,9 +63,24 @@ namespace Assignment.Controllers
         [HttpGet, Route("GetAllPostsByParams")]
         public Task<PostsList> GetAllPostsByParams(Post searchParams)
         {
-            return _postsService.GetAllPostsByParams(searchParams);
+
+            try
+            {
+                return _postsService.GetAllPostsByParams(searchParams);
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
+                throw;
+            }
         }
 
+        /// <summary>
+        /// Updates or create a specific Post.
+        /// user must login.
+        /// </summary>
+        /// <param name="post"></param>
+        /// <returns>A Inserted postId as int. if update the InsertedId > 0 .</returns>
         [Authorize]
         [HttpPost, Route("CreateOrUpdatePost")]
         public async Task<int> CreateOrUpdatePost(Post post)
@@ -65,11 +91,21 @@ namespace Assignment.Controllers
                 post.UserName = User.Identity.Name;
                 InsertedId = await _postsService.CreateOrUpdatePost(post);
                 post.Id = InsertedId;
-                //broadcast the message to the clients
-                //var userId = System.Security.Claims.ClaimTypes.NameIdentifier;
-                //await _messageHubContex.Clients.User(userId).SendAsync("CreateOrUpdatePost", post);
-                await _messageHubContex.Clients.All.SendAsync("CreateOrUpdatePost", post);
-                //await _messageHubContex.Clients.User("123").SendAsync("UpdatePost", post);
+
+
+                if (post.RoomNum != (int)(RoomType.MainRoom))
+                {
+                    var room = await _roomsService.GetRoom(post.RoomNum);
+                    foreach (var UserConnectinon in room.UserConnectinons)
+                    {
+                        await _messageHubContex.Groups.AddToGroupAsync(UserConnectinon.UserConnectinonId, room.RoomName);
+                    }
+                    await _messageHubContex.Clients.Group(room.RoomName).SendAsync("CreateOrUpdatePost", post);
+                }
+                if (post.RoomNum == (int)(RoomType.MainRoom))
+                {
+                    await _messageHubContex.Clients.All.SendAsync("CreateOrUpdatePost", post);
+                }
             }
             catch (Exception ex)
             {
@@ -79,11 +115,30 @@ namespace Assignment.Controllers
             return InsertedId;
         }
 
+        /// <summary>
+        /// DeleteRuleById method Delete AddSubtractStaffRule by id and his items.
+        /// user must login.
+        /// </summary>
+        /// <remarks> See project's JSON folder for example of JSON incoming and result.</remarks>
+        ///<returns>Returns <see cref="bool"/> : true if success.</returns>
         [Authorize]
         [HttpPost, Route("DeletePost")]
         public async Task<bool> DeletePost([FromBody] int postId)
         {
-            var result = await _postsService.DeletePost(postId);
+            bool result = false;
+            try
+            {
+                result = await _postsService.DeletePost(postId);
+                if (result)
+                {
+                    await _messageHubContex.Clients.All.SendAsync("DeletePost", postId);
+                }
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
+                throw;
+            }
             return result;
         }
 
