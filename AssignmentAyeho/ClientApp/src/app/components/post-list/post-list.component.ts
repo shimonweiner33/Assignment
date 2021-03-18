@@ -86,6 +86,7 @@ export class PostListComponent implements OnInit {
   }
   addPost() {
     this.postFormGroup.value.roomNum = this.currentRoom
+    this.postFormGroup.value.isFavorite = (this.postFormGroup.value.isFavorite)?this.postFormGroup.value.isFavorite: false
     this.postsService.AddPost(this.postFormGroup.value);
     this.openDialogAdd = false;
     this.postFormGroup.reset();
