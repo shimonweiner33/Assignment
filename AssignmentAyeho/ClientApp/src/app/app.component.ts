@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   roomFormGroup: FormGroup;
   roomList: Room[] = [];
 
-  isLogin = false;
+  //isLogin = false;
   logInUsersList: ExtendMember[] = [];
 
   constructor(private router: Router, private hubsService: HubsService, private authenticationService: AuthenticationService, private roomsService: RoomsService) {

@@ -22,7 +22,7 @@ export class PostComponent implements OnInit {
       id: new FormControl(this.post.id),
       image: new FormControl(this.post.image),
       title: new FormControl(this.post.title),
-      isFavorite: new FormControl(this.post.isFavorite),
+      isFavorite: new FormControl(false),
     });
   }
 

@@ -29,8 +29,9 @@ export class AuthenticationService {
       { observe: 'response', withCredentials: true })
       .subscribe((data: any) => {
         if (data) {
-          if (data.body.isUserAuth) {
+          if (data.body && data.body.isUserAuth) {
             //
+            this.hubsService.GetUserList();
             this.hubsService._hubConnecton.invoke("UpdateConnectionId",username);
             //
             this.isLogin = true;
@@ -48,6 +49,7 @@ export class AuthenticationService {
       .subscribe((data: any) => {
         if (data) {
           if (data.body && data.body.isUserAuth) {
+            this.hubsService.GetUserList();
             this.hubsService._hubConnecton.invoke("UpdateConnectionId",registerDetails.userName);
 
             this.isLogin = true;

@@ -8,27 +8,27 @@
     <div class="nav-main">
       <nav class="nav-options">
 
-        <button class="nav-btn" (click)="openDialogAdd = !openDialogAdd" *ngIf="!openDialogAdd">
+        <button class="nav-btn" (click)="openDialogAdd = !openDialogAdd" *ngIf="!openDialogAdd && authenticationService.isLogin">
           Private room
         </button>
-        <button class="nav-btn" (click)="cancelRoom()" *ngIf="openDialogAdd">
+        <!-- <button class="nav-btn" (click)="cancelRoom()" *ngIf="openDialogAdd">
           Cancel
-        </button>
+        </button> -->
         <div class="add-room-dialog" *ngIf="openDialogAdd">
-          <form class="room-form-group" [formGroup]="roomFormGroup">
+          <form class="room-form-group">
+            <label class="post-details-label small-title">
+              Add users to room
+              <!-- <div *ngFor="let addedUser of roomFormGroup.value.users">
+                {{addedUser.firstName}} {{addedUser.lastName}}      
+              </div> -->
+            </label>
 
-            <label class="post-details-label">
+            <!-- <label class="post-details-label small-title">
               Add room name:
               <input type="text" formControlName="roomName" class="form-field">
-            </label>
-            <label class="post-details-label">
-              Add users
-              <div *ngFor="let addedUser of roomFormGroup.value.users">
-                {{addedUser.firstName}} {{addedUser.lastName}}
-              </div>
-            </label>
+            </label> -->
           </form>
-          <button class="nav-btn" (click)="addRoom()">Save</button>
+          <!-- <button class="nav-btn" (click)="addRoom()">Save</button> -->
         </div>
 
         <button class="nav-btn" *ngFor="let room of roomList"
@@ -51,6 +51,24 @@
         <router-outlet class="forum-body-components"></router-outlet>
       </div>
 
+
+      <form class="room-users" [formGroup]="roomFormGroup"
+        *ngIf="roomFormGroup.value.users && roomFormGroup.value.users.length && authenticationService.isLogin">
+        <label class="small-title">Private Room</label>
+        <label class="small-title">
+          Add room name:
+          <input type="text" formControlName="roomName" class="form-field room-name">
+        </label>
+        <div class="user" *ngFor="let addedUser of roomFormGroup.value.users">
+          {{addedUser.firstName}} {{addedUser.lastName}}
+        </div>
+        <div class="room-btn">
+          <button class="btn-room-cancel btn-primary" (click)="cancelRoom()" *ngIf="openDialogAdd">
+            Cancel
+          </button>
+          <button class="btn-room-save btn-primary" (click)="addRoom()">Save</button>
+        </div>
+      </form>
     </div>
   </div>
 

@@ -8,6 +8,7 @@ namespace Assignment.Data.Models
     {
         public int RoomNum { get; set; }
         public string RoomName { get; set; }
+        public string UserName { get; set; }
         public List<ExtendMember> Users { get; set; }
         public List<Rooms_UserConnectinons> UserConnectinons { get; set; }
     }
@@ -19,5 +20,6 @@ namespace Assignment.Data.Models
     {
         public string UserConnectinonId { get; set; }
         public int RoomNum { get; set; }
+        public string UserName { get; set; }
     }
 }

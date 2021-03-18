@@ -18,8 +18,8 @@
   </app-post>
 
 
-  <button class="btn-add" (click)="openDialogAdd = !openDialogAdd">New post</button>
-  <div *ngIf="openDialogAdd">
+  <button class="btn-add" *ngIf="authenticationService.isLogin" (click)="openDialogAdd = !openDialogAdd">New post</button>
+  <div *ngIf="openDialogAdd && authenticationService.isLogin">
     <form [formGroup]="postFormGroup">
 
       <label class="post-details-label">

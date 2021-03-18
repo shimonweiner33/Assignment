@@ -21,7 +21,7 @@ export class PostListComponent implements OnInit {
   searchControl: FormControl = new FormControl('');
   postFormGroup: FormGroup;
   fileToUpload: File = null;
-  currentRoom: Number;
+  currentRoom: number;
   currentLoginMember: ExtendMember;
   constructor(private postsService: PostsService, private route: ActivatedRoute, private hubsService: HubsService, private authenticationService: AuthenticationService) {
   }
@@ -77,7 +77,7 @@ export class PostListComponent implements OnInit {
     });
   }
   updatePost(post: Post) {
-    post.roomNum = (post.roomNum === 0) ? 1 : post.roomNum;
+    post.roomNum = this.currentRoom;
     this.postsService.UpdatePost(post);
   }
 
@@ -85,7 +85,7 @@ export class PostListComponent implements OnInit {
     this.postsService.DeletePost(postId);
   }
   addPost() {
-    //this.postFormGroup.value.roomNum = this.currentRoom;
+    this.postFormGroup.value.roomNum = this.currentRoom
     this.postsService.AddPost(this.postFormGroup.value);
     this.openDialogAdd = false;
     this.postFormGroup.reset();

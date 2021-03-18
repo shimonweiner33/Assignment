@@ -54,6 +54,8 @@ namespace Rooms.Controllers
             int insertedId = 0;
             try
             {
+                room.UserName = User.Identity.Name;
+
                 //add the current user to jsonList todo
                 Room insertedRoom = await _roomsService.CreateOrUpdateRoom(room);
 
