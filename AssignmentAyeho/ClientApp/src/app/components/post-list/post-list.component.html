@@ -1,43 +1,50 @@
 <ng-container>
-    <div class="searches">
-        <input [formControl]="searchControl" type="text"  class="form-field">
+  <div>
+    <div class="details-row">
+      <div class="medium-title">
+        {{(currentLoginMember)?currentLoginMember.firstName + ' ' + currentLoginMember.lastName:''}}
+      </div>
+      <div class="searches">
+        <input [formControl]="searchControl" type="text" class="form-field">
         <label class="post-details-label">
-            Search
+          Search
         </label>
+      </div>
     </div>
 
-    <app-post [post]="post" class="post" (updatePostEvent)="updatePost($event)" (deletePostEvent)="deletePost($event)"
-        *ngFor="let post of filteredPostList">
-    </app-post>
+  </div>
+  <app-post [post]="post" class="post" (updatePostEvent)="updatePost($event)" (deletePostEvent)="deletePost($event)"
+    *ngFor="let post of filteredPostList">
+  </app-post>
 
 
-    <button class="btn-add" (click)="openDialogAdd = !openDialogAdd">New post</button>
-    <div *ngIf="openDialogAdd">
-        <form [formGroup]="postFormGroup">
-            
-            <label class="post-details-label">
-                author:
-                <input type="text" formControlName="author" class="form-field">
-            </label>
+  <button class="btn-add" (click)="openDialogAdd = !openDialogAdd">New post</button>
+  <div *ngIf="openDialogAdd">
+    <form [formGroup]="postFormGroup">
 
-            <label class="post-details-label">
-                comment:
-                <input type="text" formControlName="comment" class="form-field">
-            </label>
-            <label class="post-details-label">
-                image:
-                <input type="text" formControlName="image" class="form-field">
-            </label>
-            <label class="post-details-label">
-                title:
-                <input type="text" formControlName="title" class="form-field">
-            </label>
-            <label class="post-details-label">
-                isFavorite:
-                <input type="checkbox" formControlName="isFavorite">
-            </label>
+      <label class="post-details-label">
+        author:
+        <input type="text" formControlName="author" class="form-field">
+      </label>
 
-        </form>
-        <button class="btn-add" (click)="addPost()">Save</button>
-    </div>
+      <label class="post-details-label">
+        comment:
+        <input type="text" formControlName="comment" class="form-field">
+      </label>
+      <label class="post-details-label">
+        image:
+        <input type="text" formControlName="image" class="form-field">
+      </label>
+      <label class="post-details-label">
+        title:
+        <input type="text" formControlName="title" class="form-field">
+      </label>
+      <label class="post-details-label">
+        isFavorite:
+        <input type="checkbox" formControlName="isFavorite">
+      </label>
+
+    </form>
+    <button class="btn-add" (click)="addPost()">Save</button>
+  </div>
 </ng-container>

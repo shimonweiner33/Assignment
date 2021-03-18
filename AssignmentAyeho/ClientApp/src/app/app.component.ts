@@ -24,9 +24,9 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router, private hubsService: HubsService, private authenticationService: AuthenticationService, private roomsService: RoomsService) {
     if (this.authenticationService.isLogin) {
-      this.router.navigate(['/post-list',1]);
+      this.router.navigate(['/post-list', 1]);
     }
-    else{
+    else {
       this.router.navigate(['/login']);
     }
   }
@@ -43,6 +43,10 @@ export class AppComponent implements OnInit {
       this.roomFormGroup.reset();
       this.initListFormGroup();
     });
+
+    if (this.authenticationService.isLogin && !this.authenticationService.currentUserValue) {// === undefined
+      this.authenticationService.updateCurrentUser();
+    }
   }
   title = 'Forum';
 
@@ -51,7 +55,7 @@ export class AppComponent implements OnInit {
     this.authenticationService.isLogin = false;
   }
   addUserToRoom(user: any) {
-    if(this.openDialogAdd){
+    if (this.openDialogAdd) {
       let users = this.roomFormGroup.value.users;
       if (users && !users.some(x => x.userName === user.userName)) {
         users.push(user)

@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
-    this.authenticationService.currentUser.subscribe(
-      data => {
-        if (this.authenticationService.isLogin) {
+    this.authenticationService.currentUser$.subscribe(
+      res => {
+        if (this.authenticationService.isLogin && res && res.isUserAuth) {
           this.router.navigate(['/post-list',1]);
         }
       },

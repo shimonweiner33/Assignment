@@ -21,7 +21,7 @@
               Add room name:
               <input type="text" formControlName="roomName" class="form-field">
             </label>
-            <label class="post-details-label" *ngIf="">
+            <label class="post-details-label">
               Add users
               <div *ngFor="let addedUser of roomFormGroup.value.users">
                 {{addedUser.firstName}} {{addedUser.lastName}}

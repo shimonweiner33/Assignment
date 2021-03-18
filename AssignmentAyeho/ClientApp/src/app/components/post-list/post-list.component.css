@@ -16,12 +16,16 @@
   transition: border-color 0.2s;
 }
 
-.searches {
+.details-row {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-bottom: 30px;
 }
-
+.searches{
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px; 
+}
 :host ::ng-deep button {
   font-family: Arial, sans-serif;
   /* background-color: #eee; */

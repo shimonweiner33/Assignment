@@ -6,7 +6,8 @@ namespace Assignment.Data.Models
 {
     public class LoginResultModel
     {
-        public Member Member { get; set; }
+        //public Member Member { get; set; }
+        public ExtendMember Member { get; set; }
         public bool IsUserAuth { get; set; }
         public string Error { get; set; }
 
