@@ -1,4 +1,4 @@
-.comment-input {
+/* .comment-input {
     font-family: inherit;
     border: 0;
     border-bottom: 2px solid grey;
@@ -8,10 +8,8 @@
     background: transparent;
     transition: border-color 0.2s;
     width: 90%;
-}
-.comment-label{
-    width: 100%;
-}
+} */
+
 .post {
     background: white;
     border: 1px solid #ededed;

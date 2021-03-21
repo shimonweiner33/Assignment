@@ -6,7 +6,7 @@
       </div>
       <div class="searches">
         <input [formControl]="searchControl" type="text" class="form-field">
-        <label class="post-details-label">
+        <label>
           Search
         </label>
       </div>
@@ -22,16 +22,16 @@
   <div *ngIf="openDialogAdd && authenticationService.isLogin">
     <form [formGroup]="postFormGroup">
 
-      <label class="post-details-label">
+      <!-- <label class="post-details-label">
         author:
         <input type="text" formControlName="author" class="form-field">
-      </label>
+      </label> -->
 
-      <label class="post-details-label">
+      <label class="comment-label">
         comment:
-        <input type="text" formControlName="comment" class="form-field">
+        <input type="text" formControlName="comment" class="form-field comment-input">
       </label>
-      <label class="post-details-label">
+      <!-- <label class="post-details-label">
         image:
         <input type="text" formControlName="image" class="form-field">
       </label>
@@ -42,7 +42,7 @@
       <label class="post-details-label">
         isFavorite:
         <input type="checkbox" formControlName="isFavorite">
-      </label>
+      </label> -->
 
     </form>
     <button class="btn-add" (click)="addPost()">Save</button>

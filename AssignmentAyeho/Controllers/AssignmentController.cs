@@ -32,11 +32,7 @@ namespace Assignment.Controllers
             //_logger = (ILogger<AssignmentController>)Log.ForContext<AssignmentController>();
         }
 
-        //[HttpGet, Route("GetPostById")]
-        //public Task<Post> GetPostById(int postId)
-        //{
-        //    return postsService.GetPostById(postId);
-        //}
+
 
 
         /// <summary>
@@ -147,5 +143,11 @@ namespace Assignment.Controllers
             await _messageHubContex.Clients.All.SendAsync("Send", message);
             return true;
         }
+
+        //[HttpGet, Route("GetPostById")]
+        //public Task<Post> GetPostById(int postId)
+        //{
+        //    return postsService.GetPostById(postId);
+        //}
     }
 }

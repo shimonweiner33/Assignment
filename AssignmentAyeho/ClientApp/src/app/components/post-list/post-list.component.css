@@ -26,6 +26,20 @@
   justify-content: flex-end;
   margin-bottom: 30px; 
 }
+:host ::ng-deep .comment-input {
+  font-family: inherit;
+  border: 0;
+  border-bottom: 2px solid grey;
+  outline: 0;
+  color: #cfd8dc;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+  width: 90%;
+}
+:host ::ng-deep .comment-label{
+  width: 100%;
+}
 :host ::ng-deep button {
   font-family: Arial, sans-serif;
   /* background-color: #eee; */

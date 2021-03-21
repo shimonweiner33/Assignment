@@ -39,17 +39,6 @@ namespace Assignment.Services.Tests
                        ExpectedNotResult = 0
             },
         };
-        //private static readonly List<PostCreateOrUpdateInlineTestDataInfo> _updateIdsExistAndDataInvalid = new List<PostCreateOrUpdateInlineTestDataInfo>()
-        //{
-        //        new PostCreateOrUpdateInlineTestDataInfo() {
-        //               Data = new Post()
-        //               {
-
-        //               },
-        //               ExpectedResult = false
-        //        }
-
-        //};
 
         public static IEnumerable<object[]> TestData_GetPosts
         {
@@ -67,26 +56,12 @@ namespace Assignment.Services.Tests
                     yield return new object[] { v };
             }
         }
-        //for invalid test
-        //public static IEnumerable<object[]> TestData_Create_Or_Update_DataInvalid
-        //{
-        //    get
-        //    {
-        //        foreach (var v in _updateIdsExistAndDataInvalid)
-        //            yield return new object[] { v };
-        //    }
-        //}
     }
 
     public class PostsGetAllInlineTestDataInfo
     {
         public bool ExpectedResult { get; set; }
     }
-    //public class PostByIdGetInlineTestDataInfo
-    //{
-    //    public int PostId { get; set; }
-    //    public bool ExpectedResult { get; set; }
-    //}
     public class PostCreateOrUpdateInlineTestDataInfo
     {
         public Post Data { get; set; }

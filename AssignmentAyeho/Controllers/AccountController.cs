@@ -111,7 +111,6 @@ private async Task SignInUser(Login loginModel, Member member)
     var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, loginModel.UserName),
-                //new Claim("MI", member..ToString())
             };
 
     var claimsIdentity = new ClaimsIdentity(claims, AccountConst.AppCookie);
