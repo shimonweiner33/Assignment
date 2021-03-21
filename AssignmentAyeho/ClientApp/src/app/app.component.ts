@@ -32,8 +32,16 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.hubsService.userList$.subscribe((members: any) => {
-      this.logInUsersList = members ? members.members : [];
-      console.log("logInUsersList: ", this.logInUsersList);
+      if (members) {
+        this.logInUsersList = members.members;
+        if (this.authenticationService.currentUserValue) {
+          let logincurrentUser = this.logInUsersList.find(x => x.userName === this.authenticationService.currentUserValue.member.userName)
+          this.authenticationService.currentUserValue.member.userConnectinonId = logincurrentUser.userConnectinonId;
+        }
+      }
+      else {
+        this.logInUsersList = [];
+      }
     });
     this.initListFormGroup();
     this.roomsService.updateRoomListAfterChangesByOther();
@@ -63,6 +71,9 @@ export class AppComponent implements OnInit {
     }
   }
   addRoom() {
+    if (!((this.roomFormGroup.value.users.map(x => x.userName)).includes(this.authenticationService.currentUserValue.member.userName))) {
+      this.roomFormGroup.value.users.push(this.authenticationService.currentUserValue.member)
+    }
     this.roomsService.AddRoom(this.roomFormGroup.value);
     this.openDialogAdd = false;
   }

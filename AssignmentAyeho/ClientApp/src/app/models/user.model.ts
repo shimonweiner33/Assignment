@@ -28,7 +28,7 @@ export interface ExtendMember
     userName: string;
     phoneArea: string;
     phoneNumber: string;
-    UserConnectinonId: string;
+    userConnectinonId: string;
 }
 export interface ConnectedUsers{
     members: ExtendMember[];

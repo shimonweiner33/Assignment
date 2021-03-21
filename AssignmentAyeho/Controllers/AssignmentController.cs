@@ -29,9 +29,7 @@ namespace Assignment.Controllers
             this._postsService = postsService;
             this._messageHubContex = messageHubContex;
             this._roomsService = roomsService;
-
             //_logger = (ILogger<AssignmentController>)Log.ForContext<AssignmentController>();
-
         }
 
         //[HttpGet, Route("GetPostById")]

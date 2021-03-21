@@ -65,7 +65,6 @@ namespace Rooms.Controllers
                 {
                     await _messageHubContex.Groups.AddToGroupAsync(UserConnectinon.UserConnectinonId, room.RoomName);
                 }
-                //await _messageHubContex.Clients.Users(usersRoom).SendAsync("CreateOrUpdateRoom", room);
                 await _messageHubContex.Clients.Group(room.RoomName).SendAsync("CreateOrUpdateRoom", room);
 
             }
