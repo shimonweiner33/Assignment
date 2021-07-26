@@ -1,39 +1,22 @@
-<!-- <header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Assignment</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/posts-list']"
-              >Posts list</a
-            >
-          </li>
-        </ul>
-      </div>
+
+    <div class="nav-main">
+      <nav class="nav-options">
+
+        <button class="nav-btn" (click)="roomsService.openDialogAddRoom = !roomsService.openDialogAddRoom"
+          *ngIf="!roomsService.openDialogAddRoom && authenticationService.isLogin">
+          Private room
+        </button>
+        <div class="add-room-dialog" *ngIf="roomsService.openDialogAddRoom">
+          <label class="small-title room-form-group">
+            Add users to room
+          </label>
+        </div>
+
+        <button class="nav-btn" *ngFor="let room of roomList"
+          [routerLink]="['/post-list', room.roomNum]">{{room.roomName}}</button>
+        <button class="nav-btn" [routerLink]="['/post-list', 1]">Main room</button>
+        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/register">Register</button>
+        <button class="nav-btn" *ngIf="authenticationService.isLogin" (click)="logout()">Logout</button>
+        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/login">Login</button>
+      </nav>
     </div>
-  </nav>
-</header> -->

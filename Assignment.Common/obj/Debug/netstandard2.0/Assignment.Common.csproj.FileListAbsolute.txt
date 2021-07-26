@@ -14,4 +14,3 @@ C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common
 C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.csproj.CoreCompileInputs.cache
 C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.dll
 C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.pdb
-C:\gihub\Assignment\Assignment.Common\obj\Debug\netstandard2.0\Assignment.Common.csprojAssemblyReference.cache

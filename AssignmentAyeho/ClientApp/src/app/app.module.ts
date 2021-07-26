@@ -11,6 +11,10 @@ import { PostComponent } from './components/post/post.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { AuthenticationService } from './services/authentication.service';
+import { HubsService } from './services/hubs.service';
+import { PostsService } from './services/post-display.service';
+import { RoomsService } from './services/rooms.service';
 
 
 @NgModule({
@@ -38,7 +42,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     ]),
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthenticationService, RoomsService, HubsService, PostsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

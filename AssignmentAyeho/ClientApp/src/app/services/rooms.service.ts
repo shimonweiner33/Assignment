@@ -8,6 +8,8 @@ import { HubsService } from './hubs.service';
   providedIn: 'root'
 })
 export class RoomsService {
+  public openDialogAddRoom = false;
+
   private _roomListResponse$ = new BehaviorSubject<Rooms>(null);
   public roomList$ = this._roomListResponse$.asObservable();
   constructor(private http: HttpClient, private hubsService: HubsService) {
