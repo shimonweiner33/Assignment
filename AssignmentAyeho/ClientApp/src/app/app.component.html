@@ -9,9 +9,9 @@
     <app-nav-menu></app-nav-menu>
 
     <div class="forum-frame">
-      <div class="online-list">
-        <h6>{{(logInUsersList.length > 0)?'Users online':'No users online'}}</h6>
-        <ul>
+      <div>
+        <h6>{{(logInUsersList.length > 0 && authenticationService.isLogin)?'Users online':'No users online'}}</h6>
+        <ul *ngIf="authenticationService.isLogin">
           <li *ngFor="let user of logInUsersList">
             <div (click)="addUserToRoom(user)">{{user.firstName}} {{user.lastName}}</div>
         </ul>

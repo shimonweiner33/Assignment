@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Room } from '../models/rooms-display.model';
-import { AuthenticationService } from '../services/authentication.service';
-import { RoomsService } from '../services/rooms.service';
+import { Room } from '../../models/rooms-display.model';
+import { AuthenticationService } from '../../services/authentication.service';
+import { RoomsService } from '../../services/rooms.service';
 
 @Component({
   selector: 'app-nav-menu',

@@ -19,7 +19,7 @@ body{
 
 .forum-frame{
   display:flex;
-  min-height: 600px;
+  min-height: 100vh;
 }
 .online-list{
   width: 10%;

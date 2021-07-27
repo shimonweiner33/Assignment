@@ -30,10 +30,10 @@ export class AuthenticationService {
       .subscribe((data: any) => {
         if (data) {
           if (data.body && data.body.isUserAuth) {
-            //
+            
             this.hubsService.GetUserList();
             this.hubsService._hubConnecton.invoke("UpdateConnectionId",username);
-            //
+            
             this.isLogin = true;
           }
           this._currentUserSubject$.next(data.body);
@@ -81,7 +81,7 @@ export class AuthenticationService {
       if (logout.body && !logout.body.error) {
         let removedUserName = logout.body.userName;
         this.hubsService._hubConnecton.invoke("RemoveConnectionId",removedUserName);
-        this.isLogin = false;
+        this.isLogin = this.isCookieExist();
       }
       this._currentUserSubject$.next(null);
 

@@ -14,13 +14,17 @@ using Assignment.Services.Rooms;
 using Assignment.Common.Enums;
 namespace Assignment.Controllers
 {
+    /// <summary>
+    /// AssignmentController provides operations with PostsService that works with - dbo.Posts table.
+    /// and with RoomsService that works with - dbo.Rooms and dbo.Rooms_UserConnectinons tables.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class AssignmentController : ControllerBase
     {
-        private IPostsService _postsService;
-        //private readonly ILogger<AssignmentController> _logger;
-        private IRoomsService _roomsService;
+        private readonly IPostsService _postsService;
+        private readonly Serilog.ILogger _logger;
+        private readonly IRoomsService _roomsService;
 
         private readonly IHubContext<MessageHub> _messageHubContex;
 
@@ -29,7 +33,7 @@ namespace Assignment.Controllers
             this._postsService = postsService;
             this._messageHubContex = messageHubContex;
             this._roomsService = roomsService;
-            //_logger = (ILogger<AssignmentController>)Log.ForContext<AssignmentController>();
+            _logger = Log.ForContext<AssignmentController>();
         }
 
 
@@ -39,20 +43,23 @@ namespace Assignment.Controllers
         /// Gets all posts from Posts table by room number.
         /// user not must login
         /// </summary>
-        /// /// <param name="roomNum">current room to get the post to</param>
+        /// <param name="roomNum">current room to get the post to</param>
         /// <returns>Result - the model asked as PostsList.</returns>
         [HttpGet, Route("GetAllPosts")]
-        public Task<PostsList> GetAllPosts(int roomNum)
+        public async Task<PostsList> GetAllPosts(int roomNum)
         {
+            PostsList result = null;
+
             try
             {
-                return _postsService.GetAllPosts(roomNum);
+                result =  await _postsService.GetAllPosts(roomNum);
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
-                throw;
+                _logger.Error(ex, $"GetAllPosts ('{roomNum}') failed  => exception:{ex.Message}");
+                return null;
             }
+            return result;
         }
         [HttpGet, Route("GetAllPostsByParams")]
         public Task<PostsList> GetAllPostsByParams(Post searchParams)
@@ -64,7 +71,7 @@ namespace Assignment.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
+                _logger.Error(ex, $"GetAllPostsByParams ('{searchParams}') failed  => exception:{ex.Message}");
                 throw;
             }
         }
@@ -85,7 +92,7 @@ namespace Assignment.Controllers
                 post.UserName = User.Identity.Name;
                 InsertedId = await _postsService.CreateOrUpdatePost(post);
                 post.Id = InsertedId;
-
+                post.UpdatedBy = HttpContext.User.Identity.Name;
 
                 if (post.RoomNum != (int)(RoomType.MainRoom))
                 {
@@ -103,7 +110,7 @@ namespace Assignment.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, $"CreateOrUpdatePost('{post}')  failed");
+                _logger.Error(ex, $"CreateOrUpdatePost ('{post}') failed  => exception:{ex.Message}");
                 throw;
             }
             return InsertedId;
@@ -130,19 +137,19 @@ namespace Assignment.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, $"GetAllPosts('{roomNum}')  failed");
+                _logger.Error(ex, $"DeletePost ('{postId}') failed  => exception:{ex.Message}");
                 throw;
             }
             return result;
         }
 
-        [HttpGet, Route("SendMessage")]
-        public async Task<bool> SendMessage(string message)
-        {
-            //broadcast the message to the clients
-            await _messageHubContex.Clients.All.SendAsync("Send", message);
-            return true;
-        }
+        //[HttpGet, Route("SendMessage")]
+        //public async Task<bool> SendMessage(string message)
+        //{
+        //    //broadcast the message to the clients
+        //    await _messageHubContex.Clients.All.SendAsync("Send", message);
+        //    return true;
+        //}
 
         //[HttpGet, Route("GetPostById")]
         //public Task<Post> GetPostById(int postId)

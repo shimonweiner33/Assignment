@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "dHfV+ie3Pq3pqwFRDTkhAlpGTBwmvfTbUE0f88q3psYu7kg05i2otUrS4x/gDFRiaZc7eGPl0BjkJE3f3OdW8Q==",
+  "dgSpecHash": "pFWPgbbl+zfzSV7VyZo1hmqqWG3no6rh1Td0IcUZN7Hi8Ezed3He1AVSpUKXqdB28REAmtwhQ1gtNSRYbw1GIw==",
   "success": true,
   "projectFilePath": "C:\\gihub\\Assignment\\Assignment.Services\\Assignment.Services.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\serilog\\2.10.0\\serilog.2.10.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.componentmodel.annotations\\4.5.0\\system.componentmodel.annotations.4.5.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.data.sqlclient\\4.8.2\\system.data.sqlclient.4.8.2.nupkg.sha512",

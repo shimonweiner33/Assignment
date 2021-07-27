@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZhepioeLG50WiALIy9iKoNYkyT3nBRMdEUZpUj1HCHJgMCSVgfmqxkl1W8WZf7y/cLEuiheWeasBqT4shyV/LQ==",
+  "dgSpecHash": "HJ9RUHx6oe1DFSNyRNDQbByD9GpkOh+FXu3a47/8L+x77StqZOcodSNZQEW5BIhzY1VS2Z5WKCwgZCSYl5Rm3w==",
   "success": true,
   "projectFilePath": "C:\\gihub\\Assignment\\Assignment.Services.Tests\\Assignment.Services.Tests.csproj",
   "expectedPackageFiles": [
@@ -60,6 +60,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\selenium.webdriver\\3.14.0\\selenium.webdriver.3.14.0.nupkg.sha512",
+    "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\serilog\\2.10.0\\serilog.2.10.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\Shimon.Weiner.GSTEPS\\.nuget\\packages\\system.componentmodel.annotations\\4.5.0\\system.componentmodel.annotations.4.5.0.nupkg.sha512",

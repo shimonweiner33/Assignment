@@ -22,8 +22,8 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router, private hubsService: HubsService, private authenticationService: AuthenticationService, private roomsService: RoomsService) {
     if (this.authenticationService.isLogin) {
-      let roomNum = 1;
-      this.router.navigate(['/post-list', roomNum]);
+      let mainRoom = 1;
+      this.router.navigate(['/post-list', mainRoom]);
     }
     else {
       this.router.navigate(['/login']);
