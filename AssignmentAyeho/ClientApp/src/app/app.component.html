@@ -5,31 +5,13 @@
     </div>
   </div>
   <div class="forum-page">
-    <div class="nav-main">
-      <nav class="nav-options">
+    
+    <app-nav-menu></app-nav-menu>
 
-        <button class="nav-btn" (click)="openDialogAdd = !openDialogAdd"
-          *ngIf="!openDialogAdd && authenticationService.isLogin">
-          Private room
-        </button>
-        <div class="add-room-dialog" *ngIf="openDialogAdd">
-          <label class="small-title room-form-group">
-            Add users to room
-          </label>
-        </div>
-
-        <button class="nav-btn" *ngFor="let room of roomList"
-          [routerLink]="['/post-list', room.roomNum]">{{room.roomName}}</button>
-        <button class="nav-btn" [routerLink]="['/post-list', 1]">Main room</button>
-        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/register">Register</button>
-        <button class="nav-btn" *ngIf="authenticationService.isLogin" (click)="logout()">Logout</button>
-        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/login">Login</button>
-      </nav>
-    </div>
     <div class="forum-frame">
-      <div class="login-list">
-        <h6>{{(logInUsersList.length > 0)?'Users online':'No users online'}}</h6>
-        <ul>
+      <div>
+        <h6>{{(logInUsersList.length > 0 && authenticationService.isLogin)?'Users online':'No users online'}}</h6>
+        <ul *ngIf="authenticationService.isLogin">
           <li *ngFor="let user of logInUsersList">
             <div (click)="addUserToRoom(user)">{{user.firstName}} {{user.lastName}}</div>
         </ul>
@@ -49,7 +31,7 @@
           {{addedUser.firstName}} {{addedUser.lastName}}
         </div>
         <div class="room-btn">
-          <button class="btn-room-cancel btn-primary" (click)="cancelRoom()" *ngIf="openDialogAdd">
+          <button class="btn-room-cancel btn-primary" (click)="cancelRoom()" *ngIf="roomsService.openDialogAdd">
             Cancel
           </button>
           <button class="btn-room-save btn-primary" (click)="addRoom()">Save</button>

@@ -1,0 +1,22 @@
+
+    <div class="nav-main">
+      <nav class="nav-options">
+
+        <button class="nav-btn" (click)="roomsService.openDialogAddRoom = !roomsService.openDialogAddRoom"
+          *ngIf="!roomsService.openDialogAddRoom && authenticationService.isLogin">
+          Private room
+        </button>
+        <div class="add-room-dialog" *ngIf="roomsService.openDialogAddRoom">
+          <label class="small-title room-form-group">
+            Add users to room
+          </label>
+        </div>
+
+        <button class="nav-btn" *ngFor="let room of roomList"
+          [routerLink]="['/post-list', room.roomNum]">{{room.roomName}}</button>
+        <button class="nav-btn" [routerLink]="['/post-list', 1]">Main room</button>
+        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/register">Register</button>
+        <button class="nav-btn" *ngIf="authenticationService.isLogin" (click)="logout()">Logout</button>
+        <button class="nav-btn" *ngIf="!authenticationService.isLogin" routerLink="/login">Login</button>
+      </nav>
+    </div>

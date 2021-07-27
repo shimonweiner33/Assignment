@@ -15,16 +15,15 @@ import { RoomsService } from './services/rooms.service';
 })
 export class AppComponent implements OnInit {
 
-  openDialogAdd = false;
   roomFormGroup: FormGroup;
   roomList: Room[] = [];
 
-  //isLogin = false;
   logInUsersList: ExtendMember[] = [];
 
   constructor(private router: Router, private hubsService: HubsService, private authenticationService: AuthenticationService, private roomsService: RoomsService) {
     if (this.authenticationService.isLogin) {
-      this.router.navigate(['/post-list', 1]);
+      let mainRoom = 1;
+      this.router.navigate(['/post-list', mainRoom]);
     }
     else {
       this.router.navigate(['/login']);
@@ -36,6 +35,7 @@ export class AppComponent implements OnInit {
         this.logInUsersList = members.members;
         if (this.authenticationService.currentUserValue) {
           let logincurrentUser = this.logInUsersList.find(x => x.userName === this.authenticationService.currentUserValue.member.userName)
+          if(logincurrentUser && logincurrentUser.userConnectinonId)
           this.authenticationService.currentUserValue.member.userConnectinonId = logincurrentUser.userConnectinonId;
         }
       }
@@ -47,12 +47,11 @@ export class AppComponent implements OnInit {
     this.roomsService.updateRoomListAfterChangesByOther();
 
     this.roomsService.roomList$.subscribe((rooms: any) => {
-      this.roomList = rooms ? rooms.rooms : [];
       this.roomFormGroup.reset();
       this.initListFormGroup();
     });
 
-    if (this.authenticationService.isLogin && !this.authenticationService.currentUserValue) {// === undefined
+    if (this.authenticationService.isLogin && !this.authenticationService.currentUserValue) {
       this.authenticationService.updateCurrentUser();
     }
   }
@@ -62,8 +61,10 @@ export class AppComponent implements OnInit {
     this.authenticationService.logout()
     this.authenticationService.isLogin = false;
   }
+
+  //Rooms
   addUserToRoom(user: any) {
-    if (this.openDialogAdd) {
+    if (this.roomsService.openDialogAddRoom) {
       let users = this.roomFormGroup.value.users;
       if (users && !users.some(x => x.userName === user.userName)) {
         users.push(user)
@@ -75,12 +76,13 @@ export class AppComponent implements OnInit {
       this.roomFormGroup.value.users.push(this.authenticationService.currentUserValue.member)
     }
     this.roomsService.AddRoom(this.roomFormGroup.value);
-    this.openDialogAdd = false;
+    this.roomsService.openDialogAddRoom = false;
+    
   }
   cancelRoom() {
     this.roomFormGroup.reset();
     this.initListFormGroup();
-    this.openDialogAdd = !this.openDialogAdd
+    this.roomsService.openDialogAddRoom = !this.roomsService.openDialogAddRoom
   }
   initListFormGroup() {
 

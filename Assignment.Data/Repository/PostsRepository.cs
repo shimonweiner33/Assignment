@@ -129,7 +129,6 @@ namespace Assignment.Data.Repository
         {
             try
             {
-
                 var sQuery = $@"DECLARE @InsertedId int = @postId;
                                 IF EXISTS (SELECT * FROM Posts
                                 WHERE Id = @postId)

@@ -114,7 +114,7 @@ namespace Assignment.Data.Repository
                 using (IDbConnection conn = Connection)
                 {
                     var sQuery = @"SELECT m.UserName, FirstName, LastName, PhoneNumber, PhoneArea, con.UserConnectinonId FROM Member AS m 
-                                   LEFT JOIN Connections AS con 
+                                   INNER JOIN Connections AS con 
                                    ON m.UserName = con.UserName WHERE m.UserName = @userName";
                                    //SELECT m.UserName, FirstName, LastName, PhoneNumber, PhoneArea, con.UserConnectinonId FROM Member AS m INNER JOIN Connections AS con
                                    //ON m.UserName = con.UserName WHERE con.UserName = @userName";

@@ -17,17 +17,11 @@ body{
   color: #dedede;
 }
 
-.nav-main{
-  display: flex;
-  justify-content: flex-end;
-  background: #373737;
-}
-
 .forum-frame{
   display:flex;
-  min-height: 600px;
+  min-height: 100vh;
 }
-.login-list{
+.online-list{
   width: 10%;
 }
 .forum-body{
@@ -52,9 +46,7 @@ body{
   display:flex;
   align-items: center;
 }
-.nav-options{
-  display:flex;
-}
+
 :host ::ng-deep.btn-login, .btn-room-save{
   background-color: #366c36;
   margin-right: 3px;
@@ -79,25 +71,6 @@ body{
 } */
 
 
-.nav-btn {
-  padding: 1rem;
-  margin:10px 30px 10px 0px;
-  float: left;
-  padding: 8px 10px;
-  border-left: 1px solid #373737;
-  cursor: pointer;
-  border-top-right-radius: 4px;
-  font-weight: bold;
-  border-radius: 50px;
-}
-
-.nav-btn:hover {
-  color: white;
-  background-color: #42545C;
-}
-.nav-btn.active {
-  background-color: black;
-}
 
 :host ::ng-deep.login-content{
   width: 300px;

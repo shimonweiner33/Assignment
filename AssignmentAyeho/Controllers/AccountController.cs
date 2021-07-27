@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using Assignment.Data.Repository.Interface;
 using Assignment.Services.Connections;
+using System.Text.Json;
 
 namespace Assignment.Controllers
 {
@@ -59,98 +60,109 @@ namespace Assignment.Controllers
                 };
                 loginResult.IsUserAuth = true;
 
-            return Ok(loginResult);
+                return Ok(loginResult);
 
-        }
+            }
             catch (Exception ex)
             {
                 throw ex;
             }
-}
-
-[AllowAnonymous]
-[HttpPost, Route("Register")]
-public async Task<ActionResult> Register([FromBody] Register registerDetails)
-{
-    Login login = null;
-    bool isRegister = false;
-    try
-    {
-        isRegister = await _acountService.Register(registerDetails);
-        if (isRegister)
-        {
-            login = new Login()
-            {
-                Password = registerDetails.VerificationPassword,
-                UserName = registerDetails.UserName
-            };
-            return await this.Login(login);
         }
-    }
-    catch (Exception e)
-    {
 
-    }
-    return Ok(false);
-}
+        [AllowAnonymous]
+        [HttpPost, Route("Register")]
+        public async Task<ActionResult> Register([FromBody] Register registerDetails)
+        {
+            Login login = null;
+            bool isRegister = false;
+            try
+            {
+                isRegister = await _acountService.Register(registerDetails);
+                if (isRegister)
+                {
+                    login = new Login()
+                    {
+                        Password = registerDetails.VerificationPassword,
+                        UserName = registerDetails.UserName
+                    };
+                    return await this.Login(login);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Ok(false);
+        }
 
 
-[HttpPost, Route("logout")]
-public async Task<ActionResult> Logout()
-{
-    string userName = User.Identity.Name;
-    await HttpContext.SignOutAsync(AccountConst.AppCookie);
-    return Ok(userName);
-}
+        [HttpPost, Route("logout")]
+        public async Task<Logout> Logout()
+        {
+            string result = string.Empty;
+            Logout logout = new Logout();
+            try
+            {
+                string userName = User.Identity.Name;
+                await HttpContext.SignOutAsync(AccountConst.AppCookie);
+                logout.UserName = userName;
+            }
+            catch (Exception e)
+            {
+                logout.Error = e.ToString();
+                return logout;
+            }
+            return logout;
+        }
 
-private async Task SignInUser(Login loginModel, Member member)
-{
-    int userCookieExpireTimeMinutes = 20;
-    int.TryParse(_configuration["AccountSettings:UserCookieExpireTimeMinutes"], out userCookieExpireTimeMinutes);
+        private async Task SignInUser(Login loginModel, Member member)
+        {
+            int userCookieExpireTimeMinutes = 20;
+            int.TryParse(_configuration["AccountSettings:UserCookieExpireTimeMinutes"], out userCookieExpireTimeMinutes);
 
-    var claims = new List<Claim>
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, loginModel.UserName),
             };
 
-    var claimsIdentity = new ClaimsIdentity(claims, AccountConst.AppCookie);
+            var claimsIdentity = new ClaimsIdentity(claims, AccountConst.AppCookie);
 
-    var authenticationProperties = new AuthenticationProperties
-    {
-        ExpiresUtc = loginModel.RememberMe ? DateTimeOffset.UtcNow.AddHours(2).AddDays(UserCookieExpireTimeDays) : DateTimeOffset.UtcNow.AddHours(2).AddMinutes(userCookieExpireTimeMinutes),
-        IsPersistent = true
-    };
+            var authenticationProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = loginModel.RememberMe ? DateTimeOffset.UtcNow.AddHours(2).AddDays(UserCookieExpireTimeDays) : DateTimeOffset.UtcNow.AddHours(2).AddMinutes(userCookieExpireTimeMinutes),
+                IsPersistent = true
+            };
 
-    await HttpContext.SignInAsync(AccountConst.AppCookie, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
-}
-[HttpGet, Route("GetCurrentUser")]
-public async Task<LoginResultModel> GetCurrentUser()
-{
-    ExtendMember extendMember = null;
-    LoginResultModel loginResult = null;
-    try
-    {
-        string userName = User.Identity.Name;
-        if (userName != null)
-        {
-            extendMember = await _connectionsService.GetUserConnection(userName);
+            await HttpContext.SignInAsync(AccountConst.AppCookie, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
         }
+        [HttpGet, Route("GetCurrentUser")]
+        public async Task<LoginResultModel> GetCurrentUser()
+        {
+            ExtendMember extendMember = null;
+            LoginResultModel loginResult = null;
+            try
+            {
+                string userName = User.Identity.Name;
+                if (userName != null)
+                {
+                    extendMember = await _connectionsService.GetUserConnection(userName);
+                }
 
-        loginResult = new LoginResultModel();
+                loginResult = new LoginResultModel();
 
-        loginResult.Member = extendMember;
-        loginResult.IsUserAuth = true;
-    }
-    catch (Exception e)
-    {
-        //log
-    }
-    return loginResult;
-}
-[HttpGet, Route("GetAllLogInUsers")]
-public Task<ExtendMembers> GetAllLogInUsers()
-{
-    return _connectionsService.GetAllLogInUsers();
-}
+                loginResult.Member = extendMember;
+                loginResult.IsUserAuth = true;
+            }
+            catch (Exception e)
+            {
+                //log
+            }
+            return loginResult;
+        }
+        [HttpGet, Route("GetAllLogInUsers")]
+        public Task<ExtendMembers> GetAllLogInUsers()
+        {
+            return _connectionsService.GetAllLogInUsers();
+        }
     }
 }
